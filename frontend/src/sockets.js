@@ -1,8 +1,11 @@
 // import { ActionTypes as types } from '../types'
-import { Dispatch } from 'redux'
+import {
+  onChange
+
+} from './actions'
 
 const setupSocket = (dispatch , username ) => {
-  const socket = new WebSocket('ws://localhost:8989')
+  const socket = new WebSocket('ws://localhost:5000')
 
   socket.onopen = () => {
     socket.send(
@@ -13,31 +16,17 @@ const setupSocket = (dispatch , username ) => {
     )
   }
 
-  // socket.onmessage = event => {
-  //   console.log(event)
-  //   const data = JSON.parse(event.data)
-  //   console.log(data)
+  socket.onmessage = event => {
+    const data = JSON.parse(event.data)
 
-  //   switch (data.type) {
-  //     case types.NEW_MESSAGE:
-  //       dispatch(messageRecieved(data.message, data.author, data.id))
-  //       break
-  //     case types.ADD_USER:
-  //       dispatch(addUser(data.name))
-  //       break
-  //     case types.REMOVE_USER:
-  //       dispatch(removeUser(data.name))
-  //       break
-  //     case types.USERS:
-  //       dispatch(populateUsersList(data.users))
-  //       break
-  //     case types.MESSAGES:
-  //       dispatch(populateMessagesList(data.messages))
-  //       break
-  //     default:
-  //       break
-  //   }
-  // }
+    switch (data.type) {
+      case 'COMMAND':
+        dispatch(onChange())
+        break
+      default:
+        break
+    }
+  }
 
   return socket
 }

@@ -3,13 +3,14 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
 import { connect } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
 import setupSocket from './sockets'
 import username from './username'
 import handleInput from './saga'
+import {onChange} from './actions'
 
 
 const sagaMiddleware = createSagaMiddleware()
@@ -30,14 +31,7 @@ const editor = createReducer(
   }
 )
 
-const onChange = (editor, data, value) => {
-  return {
-    type: 'ON_CHANGE',
-    editor,
-    data,
-    value
-  }
-}
+const store = createStore(editor, applyMiddleware(sagaMiddleware))
 
 const mapStateToProps = (state) => {
   return {text: state.text}
@@ -53,7 +47,6 @@ const AppContainer = connect(
   mapDispatchToProps
 )(App)
 
-const store = createStore(editor)
 const socket = setupSocket(store.dispatch, username)
 sagaMiddleware.run(handleInput, { socket, username })
 
