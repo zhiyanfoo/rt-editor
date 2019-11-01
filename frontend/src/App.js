@@ -6,14 +6,15 @@ import 'codemirror/lib/codemirror.css';
 // import 'codemirror/theme/monokai.css';
 import 'codemirror/theme/monokai.css';
 
-const App = ({value, options, onBeforeChange, onChange, }) => {
+const App = ({value, options, onBeforeChange, onChange, localChange}) => {
   return <CodeMirror
       value={value}
       options={options}
       onBeforeChange={(editor, data, value) => {
+        onBeforeChange(editor, data, value)
+        localChange(editor, data, value)
       }}
       onChange={(editor, data, value) => {
-        console.log('a')
         onChange(editor, data, value)
       }}
   />

@@ -1,6 +1,6 @@
-// import { ActionTypes as types } from '../types'
 import {
-  onChange
+  // onChange
+  remoteInsert
 
 } from './actions'
 
@@ -20,8 +20,8 @@ const setupSocket = (dispatch , username ) => {
     const data = JSON.parse(event.data)
 
     switch (data.type) {
-      case 'COMMAND':
-        dispatch(onChange())
+      case 'REMOTE_INSERT':
+        dispatch(remoteInsert())
         break
       default:
         break

@@ -10,7 +10,8 @@ import createSagaMiddleware from 'redux-saga'
 import setupSocket from './sockets'
 import username from './username'
 import handleInput from './saga'
-import {onChange} from './actions'
+import {onChange, onBeforeChange, localChange} from './actions'
+import {localChangeReducer} from './reducers'
 
 
 const sagaMiddleware = createSagaMiddleware()
@@ -25,21 +26,24 @@ const createReducer = (
 
 const editor = createReducer(
   {
-    text: "asdf"
+    value: ""
   },
   {
+    'LOCAL_CHANGE': localChangeReducer
   }
 )
 
 const store = createStore(editor, applyMiddleware(sagaMiddleware))
 
 const mapStateToProps = (state) => {
-  return {text: state.text}
+  return {value: state.value}
 }
 
 
 const mapDispatchToProps = {
   onChange,
+  onBeforeChange,
+  localChange
 }
 
 const AppContainer = connect(

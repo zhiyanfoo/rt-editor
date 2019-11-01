@@ -57,12 +57,8 @@ async def counter(websocket, path):
         await websocket.send(state_event())
         async for message in websocket:
             data = json.loads(message)
-            if data["action"] == "minus":
-                STATE["value"] -= 1
-                await notify_state()
-            elif data["action"] == "plus":
-                STATE["value"] += 1
-                await notify_state()
+            if data["type"] == "ON_BEFORE_CHANGE":
+                print(data)
             else:
                 logging.error("unsupported event: {}", data)
     finally:
@@ -71,15 +67,8 @@ async def counter(websocket, path):
 
 start_server = websockets.serve(counter, "localhost", 5000)
 
+print("Starting")
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
-
-# # @app.route('/command', methods = ['POST'])
-# def add_command():
-#     j = request.get_json()
-#     print(j)
-#     command = j['command']
-#     cur.execute(f"insert into delta (command) values ('{command}')")
-#     return jsonify({'success':True}), 200, {'ContentType':'application/json'}
 
 socketio.run(app)
