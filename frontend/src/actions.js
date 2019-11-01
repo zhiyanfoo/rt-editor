@@ -1,9 +1,13 @@
+import seedrandom from 'seedrandom'
+
 export const localChange = (editor, data, value) => {
+  const rng = new seedrandom(Math.random().toString());
   return {
     type: 'LOCAL_CHANGE',
     editor,
     data,
-    value
+    value,
+    rng
   }
 }
 

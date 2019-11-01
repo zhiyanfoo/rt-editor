@@ -12,6 +12,7 @@ import username from './username'
 import handleInput from './saga'
 import {onChange, onBeforeChange, localChange} from './actions'
 import {localChangeReducer} from './reducers'
+import  {structToText} from  './util.js'
 
 
 const sagaMiddleware = createSagaMiddleware()
@@ -26,7 +27,7 @@ const createReducer = (
 
 const editor = createReducer(
   {
-    value: ""
+    struct: []
   },
   {
     'LOCAL_CHANGE': localChangeReducer
@@ -36,9 +37,8 @@ const editor = createReducer(
 const store = createStore(editor, applyMiddleware(sagaMiddleware))
 
 const mapStateToProps = (state) => {
-  return {value: state.value}
+  return {value: structToText(state.struct)}
 }
-
 
 const mapDispatchToProps = {
   onChange,
