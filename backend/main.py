@@ -11,7 +11,8 @@ import psycopg2
 
 conn = psycopg2.connect("dbname=mydb user=john password=holax host=localhost")
 cur = conn.cursor()
-cur.execute('create table if not exists delta (id serial primary key, command text, created_at timestamp default current_timestamp);')
+cur.execute('drop table if exists delta')
+cur.execute('create table delta (id serial primary key, command text, created_at timestamp default current_timestamp);')
 
 logging.basicConfig()
 
