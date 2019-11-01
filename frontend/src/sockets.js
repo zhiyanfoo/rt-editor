@@ -1,6 +1,5 @@
 import {
   // onChange
-  remoteInsert
 
 } from './actions'
 
@@ -20,8 +19,11 @@ const setupSocket = (dispatch , username ) => {
     const data = JSON.parse(event.data)
 
     switch (data.type) {
-      case 'REMOTE_INSERT':
-        dispatch(remoteInsert())
+      case 'BROADCAST_INSERT':
+        dispatch(data)
+        break
+      case 'BROADCAST_DELETE':
+        dispatch(data)
         break
       default:
         break

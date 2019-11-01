@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import { connect } from 'react-redux'
 import createSagaMiddleware from 'redux-saga'
@@ -11,7 +11,7 @@ import setupSocket from './sockets'
 import username from './username'
 import handleInput from './saga'
 import {onChange, onBeforeChange, localChange} from './actions'
-import {localChangeReducer} from './reducers'
+import {localInsertionReducer, localDeletionReducer, remoteInsertionReducer, remoteDeletionReducer} from './reducers'
 import  {structToText} from  './util.js'
 
 
@@ -30,14 +30,20 @@ const editor = createReducer(
     struct: []
   },
   {
-    'LOCAL_CHANGE': localChangeReducer
+    'LOCAL_INSERTION': localInsertionReducer,
+    'LOCAL_DELETION': localDeletionReducer,
+    'BROADCAST_INSERT': remoteInsertionReducer,
+    'BROADCAST_DELETE': remoteDeletionReducer,
   }
 )
 
-const store = createStore(editor, applyMiddleware(sagaMiddleware))
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(editor, composeEnhancers(applyMiddleware(sagaMiddleware)))
 
 const mapStateToProps = (state) => {
-  return {value: structToText(state.struct)}
+  console.log('state to prop')
+  console.log(structToText(state.struct) )
+  return {value: structToText(state.struct) + 'haaaaah'}
 }
 
 const mapDispatchToProps = {

@@ -7,6 +7,7 @@ import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/monokai.css';
 
 const App = ({value, options, onBeforeChange, onChange, localChange}) => {
+  console.log('value', value)
   return <CodeMirror
       value={value}
       options={options}

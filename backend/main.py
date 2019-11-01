@@ -34,6 +34,10 @@ async def notify_state():
         message = state_event()
         await asyncio.wait([user.send(message) for user in USERS])
 
+async def broadcast_message(user, message):
+    other_users = USERS - set([user])
+    if other_users:
+        await asyncio.wait([user.send(message) for user in other_users])
 
 async def notify_users():
     if USERS:  # asyncio.wait doesn't accept an empty list
@@ -55,15 +59,17 @@ async def counter(websocket, path):
     # register(websocket) sends user_event() to websocket
     await register(websocket)
     try:
-        await websocket.send(state_event())
         async for message in websocket:
             data = json.loads(message)
-            if data["type"] == "ON_BEFORE_CHANGE":
+            t = data["type"]
+            if t in ["BROADCAST_INSERT", "BROADCAST_DELETE"]:
                 print(data)
+                await broadcast_message(websocket, message)
             else:
-                logging.error("unsupported event: {}", data)
+                logging.error(f"unsupported event: {data}")
     finally:
         await unregister(websocket)
+
 
 
 start_server = websockets.serve(counter, "localhost", 5000)
