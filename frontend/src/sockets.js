@@ -14,7 +14,6 @@ const setupSocket = (dispatch , username ) => {
       })
     )
   }
-
   socket.onmessage = event => {
     const data = JSON.parse(event.data)
 

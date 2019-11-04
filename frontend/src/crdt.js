@@ -1,4 +1,5 @@
 import username from './username'
+import { structToText } from './util'
 const BASE = 5
 
 export const handleCharInsert = (state, action) => {
@@ -51,13 +52,16 @@ function nthIndex(str, pat, n){
 const findPos = (pos, struct) => {
   let ch = pos.ch;
   let line = pos.line;
+  console.log('ch', ch, line)
 
   if (line === 0) {
     return ch
   }
+  console.log('woohoo')
+  console.log(ch, line)
 
-  const i = nthIndex(struct, '\n', line)
-  return i + ch - 1
+  const i = nthIndex(structToText(struct), '\n', line)
+  return i + ch + 1
 }
 
 const generatePosBetween = (rng, posBefore, posAfter, newPos=[]) => {

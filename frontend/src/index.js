@@ -41,9 +41,9 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(editor, composeEnhancers(applyMiddleware(sagaMiddleware)))
 
 const mapStateToProps = (state) => {
-  console.log('state to prop')
-  console.log(structToText(state.struct) )
-  return {value: structToText(state.struct) + 'haaaaah'}
+  console.log('struct')
+  console.log(state.struct)
+  return {value: structToText(state.struct)}
 }
 
 const mapDispatchToProps = {
