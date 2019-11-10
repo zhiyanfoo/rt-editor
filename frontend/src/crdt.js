@@ -17,7 +17,8 @@ export const handleCharInsert = (state, action) => {
 export const handleCharDelete = (state, action) => {
   const struct = state.struct
   const pos = {line: action.data.to.line, ch: action.data.to.ch }
-  const index = findPos(pos, struct)
+  const newPos = {line: pos.line, ch: pos.ch -1}
+  const index = findPos(newPos, struct)
   return index
 }
 
@@ -52,7 +53,7 @@ function nthIndex(str, pat, n){
 const findPos = (pos, struct) => {
   let ch = pos.ch;
   let line = pos.line;
-  console.log('ch', ch, line)
+  console.log('ch line', ch, line)
 
   if (line === 0) {
     return ch
