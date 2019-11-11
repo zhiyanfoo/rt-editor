@@ -16,10 +16,16 @@ export const handleCharInsert = (state, action) => {
 
 export const handleCharDelete = (state, action) => {
   const struct = state.struct
-  const pos = {line: action.data.to.line, ch: action.data.to.ch }
-  const newPos = {line: pos.line, ch: pos.ch -1}
-  const index = findPos(newPos, struct)
-  return index
+  const to_line = action.data.to.line
+  const to_ch = action.data.to.ch
+  if (to_line === 0) {
+    if (to_ch === 0) {
+      return [false, -1]
+    }
+    return [true, to_ch - 1]
+  }
+  const i = nthIndex(structToText(struct), '\n', to_line)
+  return [true, i + to_ch]
 }
 
 const createChar = (rng, char, pos, struct) => {
@@ -53,13 +59,10 @@ function nthIndex(str, pat, n){
 const findPos = (pos, struct) => {
   let ch = pos.ch;
   let line = pos.line;
-  console.log('ch line', ch, line)
 
   if (line === 0) {
     return ch
   }
-  console.log('woohoo')
-  console.log(ch, line)
 
   const i = nthIndex(structToText(struct), '\n', line)
   return i + ch + 1

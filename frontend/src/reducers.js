@@ -14,8 +14,8 @@ export const localDeletionReducer = (state, action) => {
   const struct = state.struct
   const index = action.index
   const newStruct = [
-    ...struct.slice(0, index-1),
-    ...struct.slice(index)
+    ...struct.slice(0, index),
+    ...struct.slice(index + 1)
   ]
   return {struct: newStruct}
 }

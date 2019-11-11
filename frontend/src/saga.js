@@ -12,9 +12,12 @@ function* tada(params, action) {
       return
     }
     if (action.data.origin === '+delete') {
-      const index = handleCharDelete(state, action)
+      const [do_delete, index] = handleCharDelete(state, action)
+      if (!do_delete) {
+        return false
+      }
       const char = state.struct[index]
-      console.log(char)
+      console.log('char', char)
       params.socket.send(JSON.stringify({type: 'BROADCAST_DELETE', username, char}))
       yield put({type: 'LOCAL_DELETION', index})
       return
