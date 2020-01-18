@@ -3,6 +3,8 @@ import { structToText } from './util'
 const BASE = 5
 
 export const handleCharInsert = (state, action) => {
+  console.log(state)
+  // todo Ruben's question is this action serializable
   const struct = state.struct
   const pos = {line: action.data.from.line, ch: action.data.from.ch }
   let textChar

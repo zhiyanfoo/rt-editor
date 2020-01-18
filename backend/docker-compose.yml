@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: 'john'
+      POSTGRES_DB: 'mydb'
+      POSTGRES_PASSWORD: 'holax'
+    ports:
+      - "5432:5432"
