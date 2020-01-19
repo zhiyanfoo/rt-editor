@@ -18,6 +18,16 @@ import {
   remoteDeletionReducer
 } from "./reducers";
 import { structToText } from "./util.js";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  // Link
+} from "react-router-dom";
+import {
+  GenerateNewPage
+} from './generate-new-doc'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -48,8 +58,6 @@ const store = createStore(
 );
 
 const mapStateToProps = state => {
-  console.log("struct");
-  console.log(state.struct);
   return { value: structToText(state.struct) };
 };
 
@@ -67,9 +75,30 @@ const AppContainer = connect(
 const socket = setupSocket(store.dispatch, username);
 sagaMiddleware.run(handleInput, { socket, username });
 
+const routerContainer = () => {
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <AppContainer/>
+        </Route>
+        <Route exact path="/new-page">
+          <GenerateNewPage/>
+        </Route>
+        <Route exact path="/document/:id"
+          render={({match}) => {
+            return <GenerateNewPage/>
+          }
+        }
+        />
+      </Switch>
+    </Router>
+  )
+}
+
 ReactDOM.render(
   <Provider store={store}>
-    <AppContainer />
+    {routerContainer()}
   </Provider>,
   document.getElementById("root")
 );

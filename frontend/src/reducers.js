@@ -16,7 +16,7 @@ export const localDeletionReducer = (state, action) => {
 export const remoteInsertionReducer = (state, action) => {
   const char = action.char;
   const struct = state.struct;
-  const [found, index] = binarySearch(struct, compare, char);
+  const [, index] = binarySearch(struct, compare, char);
   const newStruct = [...struct.slice(0, index), char, ...struct.slice(index)];
   return { struct: newStruct };
 };
