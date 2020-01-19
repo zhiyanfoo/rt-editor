@@ -5,29 +5,17 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
-import { connect } from "react-redux";
 import createSagaMiddleware from "redux-saga";
 import setupSocket from "./sockets";
 import username from "./username";
 import handleInput from "./saga";
-import { onChange, onBeforeChange, localChange } from "./actions";
 import {
   localInsertionReducer,
   localDeletionReducer,
   remoteInsertionReducer,
   remoteDeletionReducer
 } from "./reducers";
-import { structToText } from "./util.js";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  // Link
-} from "react-router-dom";
-import {
-  GenerateNewPage
-} from './generate-new-doc'
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -57,48 +45,12 @@ const store = createStore(
   composeEnhancers(applyMiddleware(sagaMiddleware))
 );
 
-const mapStateToProps = state => {
-  return { value: structToText(state.struct) };
-};
-
-const mapDispatchToProps = {
-  onChange,
-  onBeforeChange,
-  localChange
-};
-
-const AppContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App);
-
 const socket = setupSocket(store.dispatch, username);
 sagaMiddleware.run(handleInput, { socket, username });
 
-const routerContainer = () => {
-  return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          <AppContainer/>
-        </Route>
-        <Route exact path="/new-page">
-          <GenerateNewPage/>
-        </Route>
-        <Route exact path="/document/:id"
-          render={({match}) => {
-            return <GenerateNewPage/>
-          }
-        }
-        />
-      </Switch>
-    </Router>
-  )
-}
-
 ReactDOM.render(
   <Provider store={store}>
-    {routerContainer()}
+    <App />
   </Provider>,
   document.getElementById("root")
 );
