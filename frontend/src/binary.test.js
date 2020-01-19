@@ -1,13 +1,13 @@
-const { binarySearch, compare } = require('./reducers.js')
+const { binarySearch, compare } = require("./reducers.js");
 
 const cmp = (x, y) => {
   if (x < y) {
-    return -1
+    return -1;
   } else if (x > y) {
-    return 1
+    return 1;
   }
-  return 0
-}
+  return 0;
+};
 
 // test('check1',  () => {
 //   expect(binarySearch([1,2,3], cmp, 1)).toEqual([true, 0])
@@ -53,17 +53,17 @@ const cmp = (x, y) => {
 //   expect(binarySearch([], cmp, 12)).toEqual([false, 0])
 // })
 
-test('check11', () => {
-  expect(binarySearch([1], cmp, 12)).toEqual([false, 1])
-})
+test("check11", () => {
+  expect(binarySearch([1], cmp, 12)).toEqual([false, 1]);
+});
 
-test('check12', () => {
-  expect(binarySearch([1], cmp, 0)).toEqual([false, 0])
-})
+test("check12", () => {
+  expect(binarySearch([1], cmp, 0)).toEqual([false, 0]);
+});
 
-test('check12', () => {
-  expect(binarySearch([1, 2], cmp, 0)).toEqual([false, 0])
-})
+test("check12", () => {
+  expect(binarySearch([1, 2], cmp, 0)).toEqual([false, 0]);
+});
 
 // test('charcheck1', () => {
 //   expect(compare({value: 'a', position: [{digit: 1, username: 'a'}]},
@@ -82,1761 +82,1759 @@ test('check12', () => {
 //     {value: 'a', position: [{digit: 2, username: 'a'}]})).toEqual([false, 1])
 // })
 
-test('big', () => {
+test("big", () => {
   const obj = {
-    "value": "h",
-    "position": [
+    value: "h",
+    position: [
       {
-        "digit": 4,
-        "username": "Harold"
+        digit: 4,
+        username: "Harold"
       },
       {
-        "digit": 1,
-        "username": "Harold"
+        digit: 1,
+        username: "Harold"
       },
       {
-        "digit": 4,
-        "username": "Harold"
+        digit: 4,
+        username: "Harold"
       },
       {
-        "digit": 4,
-        "username": "Harold"
+        digit: 4,
+        username: "Harold"
       },
       {
-        "digit": 2,
-        "username": "Harold"
+        digit: 2,
+        username: "Harold"
       },
       {
-        "digit": 4,
-        "username": "Cody"
+        digit: 4,
+        username: "Cody"
       }
     ]
-  }
+  };
 
   const st = [
     {
-      "value": "j",
-      "position": [
+      value: "j",
+      position: [
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "j",
-      "position": [
+      value: "j",
+      position: [
         {
-          "digit": 2,
-          "username": "Harold"
+          digit: 2,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "j",
-      "position": [
+      value: "j",
+      position: [
         {
-          "digit": 3,
-          "username": "Harold"
+          digit: 3,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "j",
-      "position": [
+      value: "j",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "a",
-      "position": [
+      value: "a",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "a",
-      "position": [
+      value: "a",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "a",
-      "position": [
+      value: "a",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "a",
-      "position": [
+      value: "a",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 2,
-          "username": "Harold"
+          digit: 2,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "a",
-      "position": [
+      value: "a",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "a",
-      "position": [
+      value: "a",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 2,
-          "username": "Harold"
+          digit: 2,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "a",
-      "position": [
+      value: "a",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 2,
-          "username": "Harold"
+          digit: 2,
+          username: "Harold"
         },
         {
-          "digit": 2,
-          "username": "Cody"
+          digit: 2,
+          username: "Cody"
         }
       ]
     },
     {
-      "value": "s",
-      "position": [
+      value: "s",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 2,
-          "username": "Harold"
+          digit: 2,
+          username: "Harold"
         },
         {
-          "digit": 3,
-          "username": "Cody"
+          digit: 3,
+          username: "Cody"
         }
       ]
     },
     {
-      "value": "a",
-      "position": [
+      value: "a",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 3,
-          "username": "Harold"
+          digit: 3,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "a",
-      "position": [
+      value: "a",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "f",
-      "position": [
+      value: "f",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Cody"
+          digit: 1,
+          username: "Cody"
         }
       ]
     },
     {
-      "value": "f",
-      "position": [
+      value: "f",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 3,
-          "username": "Cody"
+          digit: 3,
+          username: "Cody"
         }
       ]
     },
     {
-      "value": "f",
-      "position": [
+      value: "f",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Cody"
+          digit: 4,
+          username: "Cody"
         }
       ]
     },
     {
-      "value": "f",
-      "position": [
+      value: "f",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Cody"
+          digit: 4,
+          username: "Cody"
         },
         {
-          "digit": 1,
-          "username": "Cody"
+          digit: 1,
+          username: "Cody"
         }
       ]
     },
     {
-      "value": "f",
-      "position": [
+      value: "f",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Cody"
+          digit: 4,
+          username: "Cody"
         },
         {
-          "digit": 3,
-          "username": "Cody"
+          digit: 3,
+          username: "Cody"
         }
       ]
     },
     {
-      "value": "f",
-      "position": [
+      value: "f",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Cody"
+          digit: 4,
+          username: "Cody"
         },
         {
-          "digit": 4,
-          "username": "Cody"
+          digit: 4,
+          username: "Cody"
         }
       ]
     },
     {
-      "value": "j",
-      "position": [
+      value: "j",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 2,
-          "username": "Harold"
+          digit: 2,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "j",
-      "position": [
+      value: "j",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "j",
-      "position": [
+      value: "j",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "a",
-      "position": [
+      value: "a",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "s",
-      "position": [
+      value: "s",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 2,
-          "username": "Harold"
+          digit: 2,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "d",
-      "position": [
+      value: "d",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "f",
-      "position": [
+      value: "f",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "h",
-      "position": [
+      value: "h",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 3,
-          "username": "Harold"
+          digit: 3,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "a",
-      "position": [
+      value: "a",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "s",
-      "position": [
+      value: "s",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 2,
-          "username": "Harold"
+          digit: 2,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "f",
-      "position": [
+      value: "f",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "n",
-      "position": [
+      value: "n",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "a",
-      "position": [
+      value: "a",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "s",
-      "position": [
+      value: "s",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "d",
-      "position": [
+      value: "d",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "f",
-      "position": [
+      value: "f",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "j",
-      "position": [
+      value: "j",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "a",
-      "position": [
+      value: "a",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 2,
-          "username": "Harold"
+          digit: 2,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "s",
-      "position": [
+      value: "s",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "d",
-      "position": [
+      value: "d",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "u",
-      "position": [
+      value: "u",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 1,
-          "username": "Harold"
+          digit: 1,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "f",
-      "position": [
+      value: "f",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 3,
-          "username": "Harold"
+          digit: 3,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "n",
-      "position": [
+      value: "n",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "a",
-      "position": [
+      value: "a",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 3,
-          "username": "Harold"
+          digit: 3,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "i",
-      "position": [
+      value: "i",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "s",
-      "position": [
+      value: "s",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 3,
-          "username": "Harold"
+          digit: 3,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "n",
-      "position": [
+      value: "n",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "d",
-      "position": [
+      value: "d",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 2,
-          "username": "Harold"
+          digit: 2,
+          username: "Harold"
         }
       ]
     },
     {
-      "value": "f",
-      "position": [
+      value: "f",
+      position: [
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 4,
-          "username": "Harold"
+          digit: 4,
+          username: "Harold"
         },
         {
-          "digit": 3,
-          "username": "Harold"
+          digit: 3,
+          username: "Harold"
         }
       ]
     }
-  ]
-  expect(
-    binarySearch(st, compare, obj)
-  ).toEqual([false, 12])
-})
+  ];
+  expect(binarySearch(st, compare, obj)).toEqual([false, 12]);
+});

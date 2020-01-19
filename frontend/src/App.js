@@ -1,24 +1,26 @@
-import {Controlled as CodeMirror} from 'react-codemirror2'
-import React from 'react'
+import { Controlled as CodeMirror } from "react-codemirror2";
+import React from "react";
 // var React = require('react');
-import 'codemirror/lib/codemirror.css';
+import "codemirror/lib/codemirror.css";
 // import 'codemirror/lib/codemirror.css';
 // import 'codemirror/theme/monokai.css';
-import 'codemirror/theme/monokai.css';
+import "codemirror/theme/monokai.css";
 
-const App = ({value, options, onBeforeChange, onChange, localChange}) => {
-  return <CodeMirror
+const App = ({ value, options, onBeforeChange, onChange, localChange }) => {
+  return (
+    <CodeMirror
       value={value}
       options={options}
       onBeforeChange={(editor, data, value) => {
-        onBeforeChange(editor, data, value)
-        localChange(editor, data, value)
+        onBeforeChange(editor, data, value);
+        localChange(editor, data, value);
       }}
       onChange={(editor, data, value) => {
-        onChange(editor, data, value)
+        onChange(editor, data, value);
       }}
-  />
-}
+    />
+  );
+};
 
 export default App;
 
@@ -32,7 +34,6 @@ export default App;
 // require('codemirror/mode/javascript/javascript');
 // require('codemirror/mode/xml/xml');
 // require('codemirror/mode/markdown/markdown');
-
 
 // var defaults = {
 // 	markdown: '# Heading\n\nSome **bold** and _italic_ text\nBy [Jed Watson](https://github.com/JedWatson)',

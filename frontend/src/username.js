@@ -1,4 +1,4 @@
-import * as Chance from 'chance'
+import * as Chance from "chance";
 
-const chance = new Chance()
-export default chance.first()
+const chance = new Chance();
+export default chance.first();

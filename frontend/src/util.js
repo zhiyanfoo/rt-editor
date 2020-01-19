@@ -1,1 +1,1 @@
-export const structToText = (struct) => struct.map(x => x.value).join('');
+export const structToText = struct => struct.map(x => x.value).join("");
