@@ -2,7 +2,7 @@ version: "3"
 
 services:
   db:
-    image: postgres:alpine
+    image: postgres:11-alpine
     environment:
       POSTGRES_USER: 'john'
       POSTGRES_DB: 'mydb'
