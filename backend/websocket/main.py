@@ -15,7 +15,9 @@ host = config['postgres_host']
 
 conn = psycopg2.connect(f"dbname=mydb user=john password=holax host={host}")
 cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-cur.execute('create table if not exists delta (id serial primary key, command text, created_at timestamp default current_timestamp)')
+cur.execute("create table if not exists delta (id serial primary key, document_id varchar(32)"
+            " , command text, created_at timestamp default current_timestamp)")
+cur.execute('create index if not exists document_id_idx on delta (document_id)')
 conn.commit()
 
 logging.basicConfig()
