@@ -1,9 +1,6 @@
 import { Controlled as CodeMirror } from "react-codemirror2";
 import React from "react";
-// var React = require('react');
 import "codemirror/lib/codemirror.css";
-// import 'codemirror/lib/codemirror.css';
-// import 'codemirror/theme/monokai.css';
 import "codemirror/theme/monokai.css";
 
 const App = ({ value, options, onBeforeChange, onChange, localChange }) => {
