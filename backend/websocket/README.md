@@ -1,4 +1,6 @@
 example config file
-```config.toml
+
+config.toml
+```
 postgres_host = "localhost"
 ```
