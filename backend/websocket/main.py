@@ -1,18 +1,20 @@
-# from flask import Flask, request, jsonify
-# app = Flask(__name__)
-# from flask_socketio import SocketIO
+import os
 import asyncio
-import websockets
 import json
 import logging
-import psycopg2.extras
 
+import websockets
 import psycopg2
-# socketio = SocketIO(app)
+import psycopg2.extras
+import toml
 
-conn = psycopg2.connect("dbname=mydb user=john password=holax host=localhost")
+path = os.path.dirname(os.path.realpath(__file__))
+config = toml.load(os.path.join(path, "config.toml"))
+
+host = config['postgres_host']
+
+conn = psycopg2.connect(f"dbname=mydb user=john password=holax host={host}")
 cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-# cur.execute('drop table if exists delta')
 cur.execute('create table if not exists delta (id serial primary key, command text, created_at timestamp default current_timestamp)')
 conn.commit()
 
