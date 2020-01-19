@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
 
-export const GenerateNewPage = () => (
+export const GenerateNewDoc = () => (
   <Container
     className="text-center"
     style={{

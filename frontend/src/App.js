@@ -6,7 +6,7 @@ import {
   // Link
 } from "react-router-dom";
 
-import { GenerateNewPage } from "./generate-new-doc";
+import { GenerateNewDoc } from "./components/GenerateNewDoc";
 import Editor from "./components/Editor";
 
 const App = () => {
@@ -16,14 +16,14 @@ const App = () => {
         <Route exact path="/">
           <Editor />
         </Route>
-        <Route exact path="/new-page">
-          <GenerateNewPage />
+        <Route exact path="/new-doc">
+          <GenerateNewDoc />
         </Route>
         <Route
           exact
           path="/document/:id"
           render={({ match }) => {
-            return <GenerateNewPage />;
+            return <GenerateNewDoc />;
           }}
         />
       </Switch>
