@@ -2,35 +2,29 @@ import username from "./username";
 import { structToText } from "./util";
 const BASE = 5;
 
-export const handleCharInsert = (state, action) => {
-  console.log(state);
-  // todo Ruben's question is this action serializable
-  const struct = state.struct;
-  const pos = { line: action.data.from.line, ch: action.data.from.ch };
-  let textChar;
-  if (action.data.text.length === 2) {
-    textChar = "\n";
-  } else {
-    textChar = action.data.text[0];
-  }
-  return createChar(action.rng, textChar, pos, struct);
+// TODO: Are we gonna keep naming the CRDT text variable with "struct"?
+//       Whats a better name?
+
+// type CRDTPosition = Array<number>
+// type CRDTChar = { value: string, position: CRDTPosition }
+// type CRDTDeletion = CRDTChar
+
+// output: a tuple [posIndex, deletion]: [number, CRDTDeletion]
+export const createCRDTDeletion = (pos, struct) => {
+  const posIndex =
+    pos.line === 0
+      ? pos.ch - 1
+      : nthIndex(structToText(struct), "\n", pos.line) + pos.ch;
+
+  const crdtChar = struct[posIndex];
+
+  return [posIndex, crdtChar];
 };
 
-export const handleCharDelete = (state, action) => {
-  const struct = state.struct;
-  const to_line = action.data.to.line;
-  const to_ch = action.data.to.ch;
-  if (to_line === 0) {
-    if (to_ch === 0) {
-      return [false, -1];
-    }
-    return [true, to_ch - 1];
-  }
-  const i = nthIndex(structToText(struct), "\n", to_line);
-  return [true, i + to_ch];
-};
+// type CRDTInsertion = CRDTChar
 
-const createChar = (rng, char, pos, struct) => {
+// output: a tuple [posIndex, insertion]: [number, CRDTInsertion]
+export const createCRDTInsertion = (rng, char, pos, struct) => {
   const posIndex = findPos(pos, struct);
   let posBefore;
   let posAfter;

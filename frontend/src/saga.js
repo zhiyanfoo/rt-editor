@@ -1,36 +1,47 @@
 import { takeEvery, select, put } from "redux-saga/effects";
-import { handleCharInsert, handleCharDelete } from "./crdt";
+import seedrandom from "seedrandom";
+
+import { createCRDTInsertion, createCRDTDeletion } from "./crdt";
 
 function* tada(params, action) {
-  if (action.type === "ON_BEFORE_CHANGE") {
-    const username = params.username;
-    const state = yield select();
-    if (action.data.origin === "+input") {
-      const [posIndex, char] = handleCharInsert(state, action);
-      params.socket.send(
-        JSON.stringify({ type: "BROADCAST_INSERT", username, char })
-      );
-      yield put({ type: "LOCAL_INSERTION", index: posIndex, char });
-      return;
-    }
-    if (action.data.origin === "+delete") {
-      const [do_delete, index] = handleCharDelete(state, action);
-      if (!do_delete) {
-        return false;
-      }
-      const char = state.struct[index];
-      console.log("char", char);
-      params.socket.send(
-        JSON.stringify({ type: "BROADCAST_DELETE", username, char })
-      );
-      yield put({ type: "LOCAL_DELETION", index });
-      return;
-    }
+  const username = params.username;
+  const state = yield select();
+
+  if (action.origin === "+insert") {
+    // impure
+    const rng = new seedrandom(Math.random().toString());
+
+    const [posIndex, insertion] = createCRDTInsertion(
+      rng,
+      action.char,
+      action.pos,
+      state.struct
+    );
+
+    params.socket.send(
+      JSON.stringify({ type: "BROADCAST_INSERT", username, char: insertion })
+    );
+
+    yield put({ type: "LOCAL_INSERTION", index: posIndex, char: insertion });
+
+    return;
+  }
+
+  if (action.origin === "+delete") {
+    const [posIndex, deletion] = createCRDTDeletion(action.pos, state.struct);
+
+    params.socket.send(
+      JSON.stringify({ type: "BROADCAST_DELETE", username, char: deletion })
+    );
+
+    yield put({ type: "LOCAL_DELETION", index: posIndex });
+
+    return;
   }
 }
 
 function* handleInput(params) {
-  yield takeEvery("ON_BEFORE_CHANGE", tada, params);
+  yield takeEvery("INPUT", tada, params);
 }
 
 export default handleInput;

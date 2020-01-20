@@ -5,16 +5,35 @@ import "codemirror/theme/monokai.css";
 import { connect } from "react-redux";
 
 import { structToText } from "../../util";
-import { onChange, onBeforeChange, localChange } from "../../actions";
+import { onChange, onInputDeletion, onInputInsertion } from "../../actions";
 
-const Editor = ({ value, options, onBeforeChange, onChange, localChange }) => {
+const Editor = ({
+  value,
+  options,
+  onInputInsertion,
+  onInputDeletion,
+  onChange
+}) => {
   return (
     <CodeMirror
       value={value}
       options={options}
-      onBeforeChange={(editor, data, value) => {
-        onBeforeChange(editor, data, value);
-        localChange(editor, data, value);
+      onBeforeChange={(_editor, data, _value) => {
+        if (data.origin === "+input") {
+          const char = data.text.length === 2 ? "\n" : data.text[0];
+
+          const pos = data.from;
+
+          onInputInsertion(char, pos);
+        } else if (data.origin === "+delete") {
+          const pos = data.to;
+
+          if (pos.line === 0 && pos.ch === 0) {
+            return false;
+          }
+
+          onInputDeletion(pos);
+        }
       }}
       onChange={(editor, data, value) => {
         onChange(editor, data, value);
@@ -29,8 +48,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   onChange,
-  onBeforeChange,
-  localChange
+  onInputInsertion,
+  onInputDeletion
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor);
