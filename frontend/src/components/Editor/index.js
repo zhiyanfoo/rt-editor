@@ -5,14 +5,13 @@ import "codemirror/theme/monokai.css";
 import { connect } from "react-redux";
 
 import { structToText } from "../../util";
-import { onChange, onInputDeletion, onInputInsertion } from "../../actions";
+import { onInputDeletion, onInputInsertion } from "../../actions";
 
 const Editor = ({
   value,
   options,
   onInputInsertion,
   onInputDeletion,
-  onChange
 }) => {
   return (
     <CodeMirror
@@ -35,9 +34,6 @@ const Editor = ({
           onInputDeletion(pos);
         }
       }}
-      onChange={(editor, data, value) => {
-        onChange(editor, data, value);
-      }}
     />
   );
 };
@@ -47,7 +43,6 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = {
-  onChange,
   onInputInsertion,
   onInputDeletion
 };
