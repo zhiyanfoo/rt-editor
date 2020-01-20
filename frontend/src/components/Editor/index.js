@@ -7,12 +7,7 @@ import { connect } from "react-redux";
 import { structToText } from "../../util";
 import { onInputDeletion, onInputInsertion } from "../../actions";
 
-const Editor = ({
-  value,
-  options,
-  onInputInsertion,
-  onInputDeletion,
-}) => {
+const Editor = ({ value, options, onInputInsertion, onInputDeletion }) => {
   return (
     <CodeMirror
       value={value}

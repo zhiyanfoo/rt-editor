@@ -1,12 +1,15 @@
+export const ActionType = {
+  InputInsertion: "INPUT_INSERTION",
+  InputDeletion: "INPUT_DELETION"
+};
+
 export const onInputInsertion = (char, pos) => ({
-  type: "INPUT",
-  origin: "+insert",
+  type: ActionType.InputInsertion,
   char,
   pos
 });
 
 export const onInputDeletion = pos => ({
-  type: "INPUT",
-  origin: "+delete",
+  type: ActionType.InputDeletion,
   pos
 });
