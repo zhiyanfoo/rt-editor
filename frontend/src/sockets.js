@@ -1,7 +1,3 @@
-import // onChange
-
-"./actions";
-
 const setupSocket = (dispatch, username) => {
   const socket = new WebSocket("ws://localhost:5000");
 
