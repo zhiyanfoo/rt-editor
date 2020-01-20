@@ -1,6 +1,7 @@
 import username from "./username";
-import { structToText } from "./util";
 const BASE = 5;
+
+export const structToText = struct => struct.map(x => x.value).join("");
 
 // TODO: Are we gonna keep naming the CRDT text variable with "struct"?
 //       Whats a better name?

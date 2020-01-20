@@ -4,8 +4,8 @@ import "codemirror/lib/codemirror.css";
 import "codemirror/theme/monokai.css";
 import { connect } from "react-redux";
 
-import { structToText } from "../../util";
 import { onInputDeletion, onInputInsertion } from "../../actions";
+import { selectors } from "../../reducers";
 
 const Editor = ({ value, options, onInputInsertion, onInputDeletion }) => {
   return (
@@ -34,7 +34,7 @@ const Editor = ({ value, options, onInputInsertion, onInputDeletion }) => {
 };
 
 const mapStateToProps = state => {
-  return { value: structToText(state.struct) };
+  return { value: selectors.getText(state) };
 };
 
 const mapDispatchToProps = {
