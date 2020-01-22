@@ -28,3 +28,9 @@ export const onBeforeChange = (editor, data, value) => {
     rng
   };
 };
+
+export const generateNewDoc = () => {
+  return {
+    type: "GENERATE_NEW_DOC"
+  };
+};
