@@ -1,35 +1,45 @@
 import { structToText } from "./crdt";
 
+export const initialState = { struct: [] }
+
 export const selectors = {
   getText: state => structToText(state.struct)
 }
 
-export const localInsertionReducer = (state, action) => {
+export const localInsertionReducer = (state = {}, action) => {
   const struct = state.struct;
+  if (struct === undefined)
+    return initialState
   const index = action.index;
   const char = action.char;
   const newStruct = [...struct.slice(0, index), char, ...struct.slice(index)];
   return { struct: newStruct };
 };
 
-export const localDeletionReducer = (state, action) => {
+export const localDeletionReducer = (state = {}, action) => {
   const struct = state.struct;
+  if (struct === undefined)
+    return initialState
   const index = action.index;
   const newStruct = [...struct.slice(0, index), ...struct.slice(index + 1)];
   return { struct: newStruct };
 };
 
-export const remoteInsertionReducer = (state, action) => {
+export const remoteInsertionReducer = (state = {}, action) => {
   const char = action.char;
   const struct = state.struct;
+  if (struct === undefined)
+    return initialState
   const [, index] = binarySearch(struct, compare, char);
   const newStruct = [...struct.slice(0, index), char, ...struct.slice(index)];
   return { struct: newStruct };
 };
 
-export const remoteDeletionReducer = (state, action) => {
+export const remoteDeletionReducer = (state = {}, action) => {
   const char = action.char;
   const struct = state.struct;
+  if (struct === undefined)
+    return initialState
   const [found, index] = binarySearch(struct, compare, char);
   if (!found) {
     console.warn("Not found");
@@ -78,7 +88,6 @@ export const binarySearch = (list, compare, target) => {
 };
 
 export const binarySearchHelper = (list, compare, target, min, max) => {
-  console.log(`step ${min} ${max}`);
   if (min >= max) {
     const r = compare(list[min], target);
     if (r === 0) {

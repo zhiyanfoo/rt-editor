@@ -2,7 +2,7 @@ export const ActionType = {
   InputInsertion: "INPUT_INSERTION",
   InputDeletion: "INPUT_DELETION",
   GenerateDocumentHttps: "GENERATE_DOCUMENT_HTTPS",
-  GoToDocumentPage: "GoToDocumentPage",
+  GoToDocumentPage: "GO_TO_DOCUMENT_PAGE",
 };
 
 export const onInputInsertion = (char, pos) => ({

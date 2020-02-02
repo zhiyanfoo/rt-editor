@@ -7,10 +7,11 @@ import toml
 from flask import Flask
 import psycopg2
 import psycopg2.extras
+from flask_cors import CORS
 
 rd = random.Random()
-rd.seed(0)
 app = Flask(__name__)
+CORS(app, origin='http://localhost:3000')
 
 path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 config = toml.load(os.path.join(path, "config.toml"))
@@ -36,8 +37,8 @@ def create_new_doc():
     conn.commit()
     return tag
 
-@app.route('/generate_document_id', methods=['POST'])
-def generate_document_id():
+@app.route('/generate_document', methods=['POST'])
+def generate_document():
     tag = create_new_doc()
     return json.dumps({'document_tag': tag})
 

@@ -34,7 +34,7 @@ const Editor = ({ value, options, onInputInsertion, onInputDeletion }) => {
 };
 
 const mapStateToProps = state => {
-  return { value: selectors.getText(state) };
+  return { value: selectors.getText(state.editor) };
 };
 
 const mapDispatchToProps = {

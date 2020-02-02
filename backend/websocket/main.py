@@ -66,10 +66,9 @@ async def sync_up(user):
     for command in commands:
         asyncio.ensure_future(broadcast_message(user, command))
 
-
 async def register(websocket):
     USERS.add(websocket)
-    asyncio.ensure_future(sync_up(websocket))
+    # asyncio.ensure_future(sync_up(websocket))
 
     # await notify_users()
 

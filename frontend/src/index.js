@@ -1,15 +1,21 @@
 import React from "react";
+import { createBrowserHistory } from 'history'
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
+import { connectRouter } from 'connected-react-router'
 import { createStore, applyMiddleware, compose } from "redux";
 import { Provider } from "react-redux";
 import createSagaMiddleware from "redux-saga";
+import { routerMiddleware } from 'connected-react-router';
+import { combineReducers } from 'redux';
+
+import "./index.css";
+import App from "./App";
+import * as serviceWorker from "./serviceWorker";
 import setupSocket from "./sockets";
 import username from "./username";
 import handleInput from "./saga";
 import {
+  initialState,
   localInsertionReducer,
   localDeletionReducer,
   remoteInsertionReducer,
@@ -28,9 +34,7 @@ const createReducer = (initialState, handlers) => (
     : state;
 
 const editor = createReducer(
-  {
-    struct: []
-  },
+  initialState,
   {
     LOCAL_INSERTION: localInsertionReducer,
     LOCAL_DELETION: localDeletionReducer,
@@ -39,10 +43,24 @@ const editor = createReducer(
   }
 );
 
+const history = createBrowserHistory()
+
+const rootReducer = combineReducers(
+  {
+    editor,
+    router: connectRouter(history),
+  }
+)
+
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
-  editor,
-  composeEnhancers(applyMiddleware(sagaMiddleware))
+  rootReducer,
+  composeEnhancers(
+    applyMiddleware(
+      sagaMiddleware,
+      routerMiddleware(history)
+    )
+  )
 );
 
 const socket = setupSocket(store.dispatch, username);

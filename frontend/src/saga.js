@@ -8,7 +8,7 @@ import { HTTPS_BASE_URL } from './config'
 
 
 function* handleInsertion({ socket, username }, action) {
-  const state = yield select();
+  const state = yield select(state => state.editor);
 
   // impure
   const rng = new seedrandom(Math.random().toString());
@@ -28,7 +28,7 @@ function* handleInsertion({ socket, username }, action) {
 }
 
 function* handleDeletion({ socket, username }, action) {
-  const state = yield select();
+  const state = yield select(state => state.editor);
 
   const [posIndex, deletion] = createCRDTDeletion(action.pos, state.struct);
 
