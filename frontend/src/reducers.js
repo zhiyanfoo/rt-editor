@@ -1,3 +1,6 @@
+import { combineReducers } from 'redux';
+import { connectRouter } from 'connected-react-router'
+
 import { structToText } from "./crdt";
 
 export const initialState = { struct: [] }
@@ -110,3 +113,28 @@ export const binarySearchHelper = (list, compare, target, min, max) => {
 
   return [true, half];
 };
+
+const createReducer = (initialState, handlers) => (
+  state = initialState,
+  action
+) =>
+  handlers.hasOwnProperty(action.type)
+    ? handlers[action.type](state, action)
+    : state;
+
+const editor = createReducer(
+  initialState,
+  {
+    LOCAL_INSERTION: localInsertionReducer,
+    LOCAL_DELETION: localDeletionReducer,
+    BROADCAST_INSERT: remoteInsertionReducer,
+    BROADCAST_DELETE: remoteDeletionReducer
+  }
+);
+
+export const createRootReducer = history => combineReducers(
+  {
+    editor,
+    router: connectRouter(history),
+  }
+)
