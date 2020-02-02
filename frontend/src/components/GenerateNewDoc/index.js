@@ -1,7 +1,10 @@
 import React from "react";
 import { Button, Container, Row, Col } from "react-bootstrap";
+import { connect } from "react-redux";
 
-export const GenerateNewDoc = () => (
+import { generateNewDoc } from "../../actions";
+
+const GenerateNewDoc = ({ generateNewDoc }) => (
   <Container
     className="text-center"
     style={{
@@ -14,8 +17,25 @@ export const GenerateNewDoc = () => (
   >
     <Row>
       <Col>
-        <Button variant="primary">Create New Document</Button>
+        <Button variant="primary" onClick={generateNewDoc}>
+          Create New Document
+        </Button>
       </Col>
     </Row>
   </Container>
 );
+
+const mapDispatchToProps = {
+  generateNewDoc
+};
+
+const mapStateToProps = state => {
+  return {};
+};
+
+const GenerateNewDocWrapped = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(GenerateNewDoc);
+
+export { GenerateNewDocWrapped as GenerateNewDoc };

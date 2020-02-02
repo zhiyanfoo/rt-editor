@@ -13,3 +13,9 @@ export const onInputDeletion = pos => ({
   type: ActionType.InputDeletion,
   pos
 });
+
+export const generateNewDoc = () => {
+  return {
+    type: "GENERATE_NEW_DOC"
+  };
+};
