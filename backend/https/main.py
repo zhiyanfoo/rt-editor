@@ -20,10 +20,15 @@ host = config['postgres_host']
 conn = psycopg2.connect(f"dbname=mydb user=john password=holax host={host}")
 cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
-uuid.UUID(int=rd.getrandbits(128))
+WORDS_FILE = open('../words/words', 'r')
+WORDS = WORDS_FILE.readlines()
+WORDS_LEN = len(WORDS)
+
+def generate_document_id_():
+    return "-".join(WORDS[rd.randint(0, WORDS_LEN - 1)].strip() for _ in range(4))
 
 def create_new_doc():
-    tag = str(uuid.uuid4())
+    tag = generate_document_id_()
     cur.execute(
         "insert into document (document_tag) values (%s) returning id",
         (tag,)
@@ -35,3 +40,9 @@ def create_new_doc():
 def generate_document_id():
     tag = create_new_doc()
     return json.dumps({'document_tag': tag})
+
+import atexit
+def cleanup():
+    WORDS_FILE.close()
+
+atexit.register(cleanup)

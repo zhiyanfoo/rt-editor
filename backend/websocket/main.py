@@ -17,7 +17,7 @@ conn = psycopg2.connect(f"dbname=mydb user=john password=holax host={host}")
 cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 cur.execute(
     "create table if not exists document"
-    " (id serial primary key, document_tag varchar(36) unique)"
+    " (id serial primary key, document_tag varchar(200) unique)"
 )
 
 cur.execute(
