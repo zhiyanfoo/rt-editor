@@ -28,10 +28,8 @@ export const remoteInsertionReducer = (state, action) => {
 };
 
 export const remoteDeletionReducer = (state, action) => {
-  console.log("hello");
   const char = action.char;
   const struct = state.struct;
-  console.log("char", action.char);
   const [found, index] = binarySearch(struct, compare, char);
   if (!found) {
     console.warn("Not found");
@@ -81,9 +79,6 @@ export const binarySearch = (list, compare, target) => {
 
 export const binarySearchHelper = (list, compare, target, min, max) => {
   console.log(`step ${min} ${max}`);
-  // if (min > max) {
-  //   return [false, min]
-  // }
   if (min >= max) {
     const r = compare(list[min], target);
     if (r === 0) {
@@ -98,11 +93,6 @@ export const binarySearchHelper = (list, compare, target, min, max) => {
   const half = Math.floor((min + max) / 2);
   const midway = list[half];
   const r = compare(midway, target);
-  // if (max === 13) {
-  //   console.log(`half ${half}`)
-  //   console.log(midway)
-  //   console.log(list[half - 1])
-  // }
   if (r < 0) {
     return binarySearchHelper(list, compare, target, half + 1, max);
   } else if (r > 0) {

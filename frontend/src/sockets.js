@@ -1,5 +1,7 @@
+import { WEBSOCKET_BASE_URL } from './config'
+
 const setupSocket = (dispatch, username) => {
-  const socket = new WebSocket("ws://localhost:5000");
+  const socket = new WebSocket(`${WEBSOCKET_BASE_URL}`);
 
   socket.onopen = () => {
     socket.send(

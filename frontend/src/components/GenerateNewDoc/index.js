@@ -33,9 +33,9 @@ const mapStateToProps = state => {
   return {};
 };
 
-const GenerateNewDocWrapped = connect(
+const GenerateNewDoc_ = connect(
   mapStateToProps,
   mapDispatchToProps
 )(GenerateNewDoc);
 
-export { GenerateNewDocWrapped as GenerateNewDoc };
+export { GenerateNewDoc_ as GenerateNewDoc };

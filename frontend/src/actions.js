@@ -1,6 +1,8 @@
 export const ActionType = {
   InputInsertion: "INPUT_INSERTION",
-  InputDeletion: "INPUT_DELETION"
+  InputDeletion: "INPUT_DELETION",
+  GenerateDocumentHttps: "GENERATE_DOCUMENT_HTTPS",
+  GoToDocumentPage: "GoToDocumentPage",
 };
 
 export const onInputInsertion = (char, pos) => ({
@@ -16,6 +18,13 @@ export const onInputDeletion = pos => ({
 
 export const generateNewDoc = () => {
   return {
-    type: "GENERATE_NEW_DOC"
+    type: ActionType.GenerateDocumentHttps
   };
 };
+
+export const goToDocumentPage = (document_tag) => {
+  return {
+    type :ActionType.GoToDocumentPage,
+    document_tag,
+  };
+}
