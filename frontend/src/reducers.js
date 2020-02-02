@@ -53,7 +53,7 @@ export const remoteDeletionReducer = (state = {}, action) => {
 export const compare = (c1, c2) => {
   const pos1 = c1.position;
   const pos2 = c2.position;
-  console.log("tf", pos2);
+  // console.log("tf", pos2);
 
   for (let i = 0; i < Math.min(pos1.length, pos2.length); i++) {
     const x = pos1[i];
