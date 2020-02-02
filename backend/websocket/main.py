@@ -8,15 +8,24 @@ import psycopg2
 import psycopg2.extras
 import toml
 
-path = os.path.dirname(os.path.realpath(__file__))
+path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 config = toml.load(os.path.join(path, "config.toml"))
 
 host = config['postgres_host']
 
 conn = psycopg2.connect(f"dbname=mydb user=john password=holax host={host}")
 cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
-cur.execute("create table if not exists delta (id serial primary key, document_id varchar(32)"
-            " , command text, created_at timestamp default current_timestamp)")
+cur.execute(
+    "create table if not exists document"
+    " (id serial primary key, document_tag varchar(200) unique)"
+)
+
+cur.execute(
+    "create table if not exists delta "
+    "(id serial primary key, document_id integer references document (id)"
+    " , command text, created_at timestamp default current_timestamp)"
+)
+
 cur.execute('create index if not exists document_id_idx on delta (document_id)')
 conn.commit()
 
@@ -55,7 +64,7 @@ def get_all_commands():
 async def sync_up(user):
     commands = get_all_commands()
     for command in commands:
-        broadcast_message(user, command)
+        asyncio.ensure_future(broadcast_message(user, command))
 
 
 async def register(websocket):
@@ -79,6 +88,8 @@ async def counter(websocket, path):
                 cur.execute('insert into delta (command) values (%s)', (message,))
                 conn.commit()
                 await broadcast_message(websocket, message)
+            elif t in ['ADD_USER']:
+                continue
             else:
                 logging.error(f"unsupported event: {data}")
     finally:
