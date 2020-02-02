@@ -1,3 +1,9 @@
+import { structToText } from "./crdt";
+
+export const selectors = {
+  getText: state => structToText(state.struct)
+}
+
 export const localInsertionReducer = (state, action) => {
   const struct = state.struct;
   const index = action.index;

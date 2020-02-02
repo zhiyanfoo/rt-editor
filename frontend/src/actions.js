@@ -1,30 +1,15 @@
-import seedrandom from "seedrandom";
-
-export const localChange = (editor, data, value) => {
-  return {
-    type: "LOCAL_CHANGE",
-    editor,
-    data,
-    value
-  };
+export const ActionType = {
+  InputInsertion: "INPUT_INSERTION",
+  InputDeletion: "INPUT_DELETION"
 };
 
-export const onChange = (editor, data, value) => {
-  return {
-    type: "ON_CHANGE",
-    editor,
-    data,
-    value
-  };
-};
+export const onInputInsertion = (char, pos) => ({
+  type: ActionType.InputInsertion,
+  char,
+  pos
+});
 
-export const onBeforeChange = (editor, data, value) => {
-  const rng = new seedrandom(Math.random().toString());
-  return {
-    type: "ON_BEFORE_CHANGE",
-    editor,
-    data,
-    value,
-    rng
-  };
-};
+export const onInputDeletion = pos => ({
+  type: ActionType.InputDeletion,
+  pos
+});
