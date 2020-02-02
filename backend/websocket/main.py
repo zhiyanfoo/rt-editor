@@ -64,7 +64,7 @@ def get_all_commands():
 async def sync_up(user):
     commands = get_all_commands()
     for command in commands:
-        broadcast_message(user, command)
+        asyncio.ensure_future(broadcast_message(user, command))
 
 
 async def register(websocket):
@@ -88,6 +88,8 @@ async def counter(websocket, path):
                 cur.execute('insert into delta (command) values (%s)', (message,))
                 conn.commit()
                 await broadcast_message(websocket, message)
+            elif t in ['ADD_USER']:
+                continue
             else:
                 logging.error(f"unsupported event: {data}")
     finally:
