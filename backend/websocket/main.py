@@ -19,32 +19,25 @@ cur.execute(
     "create table if not exists document"
     " (id serial primary key, document_tag varchar(200) unique)"
 )
+conn.commit()
 
 cur.execute(
     "create table if not exists delta "
     "(id serial primary key, document_id integer references document (id)"
     " , command text, created_at timestamp default current_timestamp)"
 )
+conn.commit()
 
-cur.execute('create index if not exists document_id_idx on delta (document_id)')
+cur.execute('create index if not exists document_tag_idx on delta (document_id)')
 conn.commit()
 
 logging.basicConfig()
 
-STATE = {"value": 0}
 
 USERS = set()
 
-def state_event():
-    return json.dumps({"type": "state", **STATE})
-
 def users_event():
     return json.dumps({"type": "users", "count": len(USERS)})
-
-async def notify_state():
-    if USERS:  # asyncio.wait doesn't accept an empty list
-        message = state_event()
-        await asyncio.wait([user.send(message) for user in USERS])
 
 async def broadcast_message(user, message):
     other_users = USERS - set([user])
@@ -84,7 +77,21 @@ async def counter(websocket, path):
             data = json.loads(message)
             t = data["type"]
             if t in ["BROADCAST_INSERT", "BROADCAST_DELETE"]:
-                cur.execute('insert into delta (command) values (%s)', (message,))
+                if 'documentTag' in data:
+                    document_tag = data['documentTag']
+                    cur.execute(
+                        'select id from document where document_tag = %s',
+                        (document_tag,))
+                    result = cur.fetchone()
+                    document_id = result['id']
+                    print(document_id)
+                else:
+                    logging.error(f"missing documentTag in broadcast_message: {data}")
+                    continue
+
+                cur.execute(
+                    'insert into delta (command, document_id) values (%s, %s)',
+                    (message, document_id))
                 conn.commit()
                 await broadcast_message(websocket, message)
             elif t in ['ADD_USER']:

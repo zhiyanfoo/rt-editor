@@ -18,8 +18,6 @@ config = toml.load(os.path.join(path, "config.toml"))
 
 host = config['postgres_host']
 
-conn = psycopg2.connect(f"dbname=mydb user=john password=holax host={host}")
-cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
 WORDS_FILE = open('../words/words', 'r')
 WORDS = WORDS_FILE.readlines()
@@ -29,12 +27,18 @@ def generate_document_id_():
     return "-".join(WORDS[rd.randint(0, WORDS_LEN - 1)].strip() for _ in range(4))
 
 def create_new_doc():
+    conn = psycopg2.connect(f"dbname=mydb user=john password=holax host={host}")
+    cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
     tag = generate_document_id_()
     cur.execute(
         "insert into document (document_tag) values (%s) returning id",
         (tag,)
     )
     conn.commit()
+
+    cur.close()
+    conn.close()
     return tag
 
 @app.route('/generate_document', methods=['POST'])
