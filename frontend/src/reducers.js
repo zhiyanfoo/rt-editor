@@ -9,6 +9,14 @@ export const selectors = {
   getText: state => structToText(state.struct)
 }
 
+export const setDocumentTag = (state = {}, documentTag) => {
+  console.log(documentTag)
+  return {
+    ...state,
+    documentTag,
+  }
+}
+
 export const localInsertionReducer = (state = {}, action) => {
   const struct = state.struct;
   if (struct === undefined)
@@ -16,7 +24,7 @@ export const localInsertionReducer = (state = {}, action) => {
   const index = action.index;
   const char = action.char;
   const newStruct = [...struct.slice(0, index), char, ...struct.slice(index)];
-  return { struct: newStruct };
+  return { ...state, struct: newStruct };
 };
 
 export const localDeletionReducer = (state = {}, action) => {
@@ -25,7 +33,7 @@ export const localDeletionReducer = (state = {}, action) => {
     return initialState
   const index = action.index;
   const newStruct = [...struct.slice(0, index), ...struct.slice(index + 1)];
-  return { struct: newStruct };
+  return { ...state, struct: newStruct };
 };
 
 export const remoteInsertionReducer = (state = {}, action) => {
@@ -35,7 +43,7 @@ export const remoteInsertionReducer = (state = {}, action) => {
     return initialState
   const [, index] = binarySearch(struct, compare, char);
   const newStruct = [...struct.slice(0, index), char, ...struct.slice(index)];
-  return { struct: newStruct };
+  return { ...state, struct: newStruct };
 };
 
 export const remoteDeletionReducer = (state = {}, action) => {
@@ -46,11 +54,11 @@ export const remoteDeletionReducer = (state = {}, action) => {
   const [found, index] = binarySearch(struct, compare, char);
   if (!found) {
     console.warn("Not found");
-    return { struct };
+    return { ...state, struct };
   }
 
   const newStruct = [...struct.slice(0, index), ...struct.slice(index + 1)];
-  return { struct: newStruct };
+  return { ...state, struct: newStruct };
 };
 
 export const compare = (c1, c2) => {
@@ -128,7 +136,8 @@ const editor = createReducer(
     LOCAL_INSERTION: localInsertionReducer,
     LOCAL_DELETION: localDeletionReducer,
     BROADCAST_INSERT: remoteInsertionReducer,
-    BROADCAST_DELETE: remoteDeletionReducer
+    BROADCAST_DELETE: remoteDeletionReducer,
+    SET_DOCUMENT_TAG: setDocumentTag,
   }
 );
 

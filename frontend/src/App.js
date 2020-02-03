@@ -1,17 +1,18 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
   Switch,
-  Route
-  // Link
+  Route,
 } from "react-router-dom";
+import { ConnectedRouter } from 'connected-react-router'
+
+import { history } from './navigation'
 
 import { GenerateNewDoc } from "./components/GenerateNewDoc";
 import Editor from "./components/Editor";
 
 const App = () => {
   return (
-    <Router>
+    <ConnectedRouter history={history}>
       <Switch>
         <Route exact path="/">
           <Editor />
@@ -21,13 +22,13 @@ const App = () => {
         </Route>
         <Route
           exact
-          path="/document/:id"
+          path="/document/:documentTag"
           render={({ match }) => {
-            return <GenerateNewDoc />;
+            return <Editor document_tag={match.params.documentTag}/>;
           }}
         />
       </Switch>
-    </Router>
+    </ConnectedRouter>
   );
 };
 

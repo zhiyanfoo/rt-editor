@@ -21,10 +21,3 @@ export const generateNewDoc = () => {
     type: ActionType.GenerateDocumentHttps
   };
 };
-
-export const goToDocumentPage = (document_tag) => {
-  return {
-    type :ActionType.GoToDocumentPage,
-    document_tag,
-  };
-}
