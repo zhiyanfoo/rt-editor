@@ -1,59 +1,73 @@
-import { structToText } from "./crdt";
+import { crdtTextToString } from "./crdt";
 
-export const initialState = { struct: [] }
+export const initialState = { crdtText: [] }
 
 export const selectors = {
-  getText: state => structToText(state.struct)
+  getText: state => crdtTextToString(state.crdtText)
+}
+
+const createReducer = (initialState, handlers) => (
+  state = initialState,
+  action
+) =>
+  handlers.hasOwnProperty(action.type)
+    ? handlers[action.type](state, action)
+    : state;
+
+
+export const insertCommands = (state = {}, action) => {
+  const commands = action.commands
+  const parsedCommands = commands.map(JSON.parse)
+  return parsedCommands.reduce(editor, state)
 }
 
 export const localInsertionReducer = (state = {}, action) => {
-  const struct = state.struct;
-  if (struct === undefined)
+  const crdtText = state.crdtText;
+  if (crdtText === undefined)
     return initialState
   const index = action.index;
   const char = action.char;
-  const newStruct = [...struct.slice(0, index), char, ...struct.slice(index)];
-  return { struct: newStruct };
+  const newStruct = [...crdtText.slice(0, index), char, ...crdtText.slice(index)];
+  return { crdtText: newStruct };
 };
 
 export const localDeletionReducer = (state = {}, action) => {
-  const struct = state.struct;
-  if (struct === undefined)
+  const crdtText = state.crdtText;
+  if (crdtText === undefined)
     return initialState
   const index = action.index;
-  const newStruct = [...struct.slice(0, index), ...struct.slice(index + 1)];
-  return { struct: newStruct };
+  const newCrdtText = [...crdtText.slice(0, index), ...crdtText.slice(index + 1)];
+  return { crdtText: newCrdtText };
 };
 
 export const remoteInsertionReducer = (state = {}, action) => {
   const char = action.char;
-  const struct = state.struct;
-  if (struct === undefined)
+  const crdtText = state.crdtText;
+  if (crdtText === undefined)
     return initialState
-  const [, index] = binarySearch(struct, compare, char);
-  const newStruct = [...struct.slice(0, index), char, ...struct.slice(index)];
-  return { struct: newStruct };
+  const [, index] = binarySearch(crdtText, compare, char);
+  const newCrdtText = [...crdtText.slice(0, index), char, ...crdtText.slice(index)];
+  return { crdtText: newCrdtText };
 };
 
 export const remoteDeletionReducer = (state = {}, action) => {
   const char = action.char;
-  const struct = state.struct;
-  if (struct === undefined)
+  const crdtText = state.crdtText;
+  if (crdtText === undefined)
     return initialState
-  const [found, index] = binarySearch(struct, compare, char);
+  const [found, index] = binarySearch(crdtText, compare, char);
   if (!found) {
     console.warn("Not found");
-    return { struct };
+    return { crdtText };
   }
 
-  const newStruct = [...struct.slice(0, index), ...struct.slice(index + 1)];
-  return { struct: newStruct };
+  const newCrdtText = [...crdtText.slice(0, index), ...crdtText.slice(index + 1)];
+  return { crdtText: newCrdtText };
 };
 
 export const compare = (c1, c2) => {
   const pos1 = c1.position;
   const pos2 = c2.position;
-  console.log("tf", pos2);
 
   for (let i = 0; i < Math.min(pos1.length, pos2.length); i++) {
     const x = pos1[i];
@@ -110,3 +124,14 @@ export const binarySearchHelper = (list, compare, target, min, max) => {
 
   return [true, half];
 };
+
+export const editor = createReducer(
+  initialState,
+  {
+    LOCAL_INSERTION: localInsertionReducer,
+    LOCAL_DELETION: localDeletionReducer,
+    BROADCAST_INSERT: remoteInsertionReducer,
+    BROADCAST_DELETE: remoteDeletionReducer,
+    INSERT_COMMANDS: insertCommands,
+  }
+);

@@ -3,6 +3,8 @@ export const ActionType = {
   InputDeletion: "INPUT_DELETION",
   GenerateDocumentHttps: "GENERATE_DOCUMENT_HTTPS",
   GoToDocumentPage: "GO_TO_DOCUMENT_PAGE",
+  InsertCommands: 'INSERT_COMMANDS',
+  GetCommands: 'GET_COMMANDS',
 };
 
 export const onInputInsertion = (char, pos) => ({
@@ -26,5 +28,18 @@ export const goToDocumentPage = (document_tag) => {
   return {
     type :ActionType.GoToDocumentPage,
     document_tag,
+  };
+}
+
+export const getCommands = () => {
+  return {
+    type: ActionType.GetCommands,
+  };
+}
+
+export const insertCommands = (commands) => {
+  return {
+    type: ActionType.InsertCommands,
+    commands,
   };
 }

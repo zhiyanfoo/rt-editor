@@ -1,27 +1,26 @@
 import username from "./username";
 const BASE = 5;
 
-export const structToText = (struct) => {
-  if (struct === undefined)
+export const crdtTextToString = (crdtText) => {
+  if (crdtText === undefined)
     return ""
-  return struct.map(x => x.value).join("");
+  return crdtText.map(x => x.value).join("");
 }
 
-// TODO: Are we gonna keep naming the CRDT text variable with "struct"?
-//       Whats a better name?
 
+// type crtdText = Array<CRDTChar>
 // type CRDTPosition = Array<number>
 // type CRDTChar = { value: string, position: CRDTPosition }
 // type CRDTDeletion = CRDTChar
 
 // output: a tuple [posIndex, deletion]: [number, CRDTDeletion]
-export const createCRDTDeletion = (pos, struct) => {
+export const createCRDTDeletion = (pos, crdtText) => {
   const posIndex =
     pos.line === 0
       ? pos.ch - 1
-      : nthIndex(structToText(struct), "\n", pos.line) + pos.ch;
+      : nthIndex(crdtTextToString(crdtText), "\n", pos.line) + pos.ch;
 
-  const crdtChar = struct[posIndex];
+  const crdtChar = crdtText[posIndex];
 
   return [posIndex, crdtChar];
 };
@@ -29,17 +28,17 @@ export const createCRDTDeletion = (pos, struct) => {
 // type CRDTInsertion = CRDTChar
 
 // output: a tuple [posIndex, insertion]: [number, CRDTInsertion]
-export const createCRDTInsertion = (rng, char, pos, struct) => {
-  const posIndex = findPos(pos, struct);
+export const createCRDTInsertion = (rng, char, pos, crdtText) => {
+  const posIndex = findPos(pos, crdtText);
   let posBefore;
   let posAfter;
-  if (struct[posIndex - 1]) {
-    posBefore = struct[posIndex - 1].position;
+  if (crdtText[posIndex - 1]) {
+    posBefore = crdtText[posIndex - 1].position;
   } else {
     posBefore = [];
   }
-  if (struct[posIndex]) {
-    posAfter = struct[posIndex].position;
+  if (crdtText[posIndex]) {
+    posAfter = crdtText[posIndex].position;
   } else {
     posAfter = [];
   }
@@ -58,7 +57,7 @@ function nthIndex(str, pat, n) {
   return i;
 }
 
-const findPos = (pos, struct) => {
+const findPos = (pos, crdtText) => {
   let ch = pos.ch;
   let line = pos.line;
 
@@ -66,7 +65,7 @@ const findPos = (pos, struct) => {
     return ch;
   }
 
-  const i = nthIndex(structToText(struct), "\n", line);
+  const i = nthIndex(crdtTextToString(crdtText), "\n", line);
   return i + ch + 1;
 };
 

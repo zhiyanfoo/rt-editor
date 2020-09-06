@@ -1,13 +1,22 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import "codemirror/lib/codemirror.css";
 import "codemirror/theme/monokai.css";
 import { connect } from "react-redux";
 
-import { onInputDeletion, onInputInsertion } from "../../actions";
+import { onInputDeletion, onInputInsertion, getCommands } from "../../actions";
 import { selectors } from "../../reducers";
 
-const Editor = ({ value, options, onInputInsertion, onInputDeletion }) => {
+const Editor = ({
+  value,
+  options,
+  onInputInsertion,
+  onInputDeletion,
+  getCommands,
+}) => {
+  useEffect(() => {
+    getCommands()
+  }, [getCommands])
   return (
     <CodeMirror
       value={value}
@@ -39,7 +48,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
   onInputInsertion,
-  onInputDeletion
+  onInputDeletion,
+  getCommands,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor);

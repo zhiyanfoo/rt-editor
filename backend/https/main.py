@@ -8,6 +8,7 @@ from flask import Flask
 import psycopg2
 import psycopg2.extras
 from flask_cors import CORS
+from flask import request
 
 rd = random.Random()
 app = Flask(__name__)
@@ -37,10 +38,19 @@ def create_new_doc():
     conn.commit()
     return tag
 
-@app.route('/generate_document', methods=['POST'])
+def get_all_commands():
+    cur.execute('select command from delta')
+    return [x['command'] for x in cur.fetchall()]
+
+@app.route('/document', methods=['GET', 'POST'])
 def generate_document():
-    tag = create_new_doc()
-    return json.dumps({'document_tag': tag})
+    if request.method == 'POST':
+        tag = create_new_doc()
+        return json.dumps({'document_tag': tag})
+    if request.method == 'GET':
+        commands = get_all_commands()
+        return json.dumps({'commands': commands})
+
 
 import atexit
 def cleanup():

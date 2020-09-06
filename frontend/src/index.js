@@ -15,33 +15,11 @@ import setupSocket from "./sockets";
 import username from "./username";
 import handleInput from "./saga";
 import {
-  initialState,
-  localInsertionReducer,
-  localDeletionReducer,
-  remoteInsertionReducer,
-  remoteDeletionReducer
+  editor
 } from "./reducers";
 import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 const sagaMiddleware = createSagaMiddleware();
-
-const createReducer = (initialState, handlers) => (
-  state = initialState,
-  action
-) =>
-  handlers.hasOwnProperty(action.type)
-    ? handlers[action.type](state, action)
-    : state;
-
-const editor = createReducer(
-  initialState,
-  {
-    LOCAL_INSERTION: localInsertionReducer,
-    LOCAL_DELETION: localDeletionReducer,
-    BROADCAST_INSERT: remoteInsertionReducer,
-    BROADCAST_DELETE: remoteDeletionReducer
-  }
-);
 
 const history = createBrowserHistory()
 
