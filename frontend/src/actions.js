@@ -1,10 +1,10 @@
 export const ActionType = {
   InputInsertion: "INPUT_INSERTION",
   InputDeletion: "INPUT_DELETION",
-  GenerateDocumentHttps: "GENERATE_DOCUMENT_HTTPS",
-  GoToDocumentPage: "GO_TO_DOCUMENT_PAGE",
+  GenerateNewDoc: "GENERATE_NEW_DOC",
   InsertCommands: 'INSERT_COMMANDS',
   GetCommands: 'GET_COMMANDS',
+  SetDocumentTag: 'SET_DOCUMENT_TAG',
 };
 
 export const onInputInsertion = (char, pos) => ({
@@ -18,18 +18,15 @@ export const onInputDeletion = pos => ({
   pos
 });
 
-export const generateNewDoc = () => {
+export const generateNewDoc = (history, newTab) => {
+  console.log('action newTab')
+  console.log(newTab)
   return {
-    type: ActionType.GenerateDocumentHttps
+    type: ActionType.GenerateNewDoc,
+    history,
+    newTab,
   };
 };
-
-export const goToDocumentPage = (document_tag) => {
-  return {
-    type :ActionType.GoToDocumentPage,
-    document_tag,
-  };
-}
 
 export const getCommands = () => {
   return {
@@ -42,4 +39,26 @@ export const insertCommands = (commands) => {
     type: ActionType.InsertCommands,
     commands,
   };
+}
+
+export const localInsertion = (index, char) => {
+  return {
+    type: "LOCAL_INSERTION",
+    index,
+    char,
+  }
+}
+
+export const localDeletion = (index) => {
+  return {
+    type: "LOCAL_DELETION",
+    index: index,
+  }
+}
+
+export const setDocumentTag = (documentTag) => {
+  return {
+    type: ActionType.SetDocumentTag,
+    documentTag
+  }
 }

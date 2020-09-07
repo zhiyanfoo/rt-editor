@@ -3,7 +3,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route
-  // Link
 } from "react-router-dom";
 
 import { GenerateNewDoc } from "./components/GenerateNewDoc";
@@ -14,16 +13,16 @@ const App = () => {
     <Router>
       <Switch>
         <Route exact path="/">
-          <Editor />
+          <GenerateNewDoc />
         </Route>
         <Route exact path="/new-doc">
           <GenerateNewDoc />
         </Route>
         <Route
           exact
-          path="/document/:id"
+          path="/doc/:id"
           render={({ match }) => {
-            return <GenerateNewDoc />;
+            return <Editor />;
           }}
         />
       </Switch>

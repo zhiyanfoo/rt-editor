@@ -15,7 +15,7 @@ const createReducer = (initialState, handlers) => (
     : state;
 
 
-export const insertCommands = (state = {}, action) => {
+export const insertCommandsReducer = (state = {}, action) => {
   const commands = action.commands
   const parsedCommands = commands.map(JSON.parse)
   return parsedCommands.reduce(editor, state)
@@ -64,6 +64,10 @@ export const remoteDeletionReducer = (state = {}, action) => {
   const newCrdtText = [...crdtText.slice(0, index), ...crdtText.slice(index + 1)];
   return { crdtText: newCrdtText };
 };
+
+const setDocumentTagReducer = (state = {}, action) => {
+  return {...state, documentTag: action.documentTag}
+}
 
 export const compare = (c1, c2) => {
   const pos1 = c1.position;
@@ -132,6 +136,7 @@ export const editor = createReducer(
     LOCAL_DELETION: localDeletionReducer,
     BROADCAST_INSERT: remoteInsertionReducer,
     BROADCAST_DELETE: remoteDeletionReducer,
-    INSERT_COMMANDS: insertCommands,
+    INSERT_COMMANDS: insertCommandsReducer,
+    SET_DOCUMENT_TAG: setDocumentTagReducer
   }
 );
