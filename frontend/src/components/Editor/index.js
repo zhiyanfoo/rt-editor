@@ -33,7 +33,7 @@ const Editor = withRouter(({
   return (
     <CodeMirror
       value={value}
-      options={options}
+      options={{lineNumbers: true, options}}
       onBeforeChange={(_editor, data, _value) => {
         if (data.origin === "+input") {
           const char = data.text.length === 2 ? "\n" : data.text[0];

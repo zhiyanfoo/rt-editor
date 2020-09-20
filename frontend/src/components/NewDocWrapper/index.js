@@ -1,4 +1,7 @@
-export const wrapper = (wrappedComponent) => (props) => {
+import React from "react";
+import { Container, Row, Col } from "react-bootstrap";
+
+export const wrapper = (WrappedComponent) => (props) => {
   return <Container
     className="text-center"
     style={{

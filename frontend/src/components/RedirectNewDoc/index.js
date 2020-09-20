@@ -1,30 +1,15 @@
 import React, {useEffect} from "react";
 import { connect } from "react-redux";
-import { Container, Row, Col } from "react-bootstrap";
 import {
   generateNewDoc
 } from "../../actions";
 import { Redirect } from "react-router-dom";
 import { getDocumentUrl } from '../../utils/locationhandler'
+import { wrapper } from '../NewDocWrapper'
 
-
-const RedirectNewDoc = ({generateNewDoc, documentTag}) => {
-  useEffect(() => {
-    generateNewDoc()
-  }, [generateNewDoc])
-
-  return <Container
-    className="text-center"
-    style={{
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      height: "100vh",
-      width: "100vw"
-    }}
-  >
-    <Row>
-      <Col>
+const redirectNewDoc = ({documentTag}) => {
+  return (
+    <div>
         {
           documentTag?
           <Redirect to={getDocumentUrl(documentTag)}/>:
@@ -32,9 +17,21 @@ const RedirectNewDoc = ({generateNewDoc, documentTag}) => {
             Generating document ...
           </div>
         }
-      </Col>
-    </Row>
-  </Container>
+    </div>
+  )
+};
+
+
+const WrappedComponent = wrapper(
+  redirectNewDoc
+)
+
+const RedirectNewDoc = ({generateNewDoc, documentTag}) => {
+  useEffect(() => {
+    generateNewDoc()
+  }, [generateNewDoc])
+
+  return <WrappedComponent documentTag={documentTag}/>
 };
 
 const mapDispatchToProps = {
