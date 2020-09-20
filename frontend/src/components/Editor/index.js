@@ -2,6 +2,7 @@ import React, {useEffect} from "react";
 import { Controlled as CodeMirror } from "react-codemirror2";
 import { connect } from "react-redux";
 import { Container } from "react-bootstrap";
+import 'codemirror/addon/display/placeholder'
 
 import {
   addSocket,
@@ -42,6 +43,7 @@ const Editor = withRouter(({
         value={value}
         options={
           {
+            placeholder: 'Share the url and edit this document at the same time!',
             options
           }
         }

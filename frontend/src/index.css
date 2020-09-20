@@ -13,11 +13,7 @@ code {
 }
 
 .CodeMirror {
-  height: auto;
+  height: 100vh;
   font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
   font-size: 18px;
-}
-
-html, body>div {
-  height: 100vh
 }
