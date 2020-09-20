@@ -7,6 +7,7 @@ import {
   ActionType,
   localInsertion,
   localDeletion,
+  setDocumentTag
 } from "./actions";
 import { HTTPS_BASE_URL } from './config'
 
@@ -52,16 +53,15 @@ function* handleDeletion({ socket, username }, action) {
   yield put(localDeletion(posIndex));
 }
 
-function* GenerateNewDoc({socket}, action) {
+function* GenerateNewDoc({socket}) {
   try {
     const result = yield call(
       () => superagent.post(`${HTTPS_BASE_URL}/document`)
     )
     const documentTag = JSON.parse(result.text).document_tag
-    // yield put(setDocumentTag(documentTag))
-
-    const url = `/doc/${documentTag}`
-    action.history.push(url)
+    console.log('documentTag saga')
+    console.log(documentTag)
+    yield put(setDocumentTag(documentTag))
   } catch (err) {
     console.log(err)
   }

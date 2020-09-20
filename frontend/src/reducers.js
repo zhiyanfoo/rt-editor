@@ -66,6 +66,8 @@ export const remoteDeletionReducer = (state = {}, action) => {
 };
 
 const setDocumentTagReducer = (state = {}, action) => {
+  console.log('setDocumentTagReducer ')
+  console.log(action)
   return {...state, documentTag: action.documentTag}
 }
 

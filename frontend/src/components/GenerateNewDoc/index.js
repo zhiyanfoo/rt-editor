@@ -1,14 +1,13 @@
 import React from "react";
-import { Button, Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col } from "react-bootstrap";
 import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 
-import { generateNewDoc } from "../../actions";
-
+// import { generateNewDoc } from "../../actions";
 const GenerateNewDoc = withRouter(({ generateNewDoc, history }) => {
-  const generateNewDocClosure = () => {
-    generateNewDoc(history)
-  }
+  // const generateNewDocClosure = () => {
+  //   generateNewDoc(history)
+  // }
   return <Container
     className="text-center"
     style={{
@@ -21,16 +20,16 @@ const GenerateNewDoc = withRouter(({ generateNewDoc, history }) => {
   >
     <Row>
       <Col>
-        <Button variant="primary" onClick={generateNewDocClosure}>
+        <Link className="btn btn-default" to='/new'>
           Create New Document
-        </Button>
+        </Link>
       </Col>
     </Row>
   </Container>
 });
 
 const mapDispatchToProps = {
-  generateNewDoc
+  // generateNewDoc
 };
 
 const mapStateToProps = state => {

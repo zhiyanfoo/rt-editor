@@ -10,3 +10,5 @@ export const getDocumentTag = (pathname) => {
   }
   return arr[1]
 }
+
+export const getDocumentUrl = (documentTag) => `/doc/${documentTag}`;

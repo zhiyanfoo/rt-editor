@@ -21,11 +21,9 @@ export const onInputDeletion = (pos, documentTag) => ({
   documentTag,
 });
 
-export const generateNewDoc = (history, newTab) => {
+export const generateNewDoc = () => {
   return {
     type: ActionType.GenerateNewDoc,
-    history,
-    newTab,
   };
 };
 
@@ -65,9 +63,9 @@ export const localDeletion = (index) => {
   }
 }
 
-// export const setDocumentTag = (documentTag) => {
-//   return {
-//     type: ActionType.SetDocumentTag,
-//     documentTag
-//   }
-// }
+export const setDocumentTag = (documentTag) => {
+  return {
+    type: ActionType.SetDocumentTag,
+    documentTag
+  }
+}
