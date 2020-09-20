@@ -7,8 +7,10 @@ import { Provider } from "react-redux";
 import createSagaMiddleware from "redux-saga";
 import { routerMiddleware } from 'connected-react-router';
 import { combineReducers } from 'redux';
-
+// import codemirror then our styles
+import "codemirror/lib/codemirror.css";
 import "./index.css";
+
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import setupSocket from "./sockets";

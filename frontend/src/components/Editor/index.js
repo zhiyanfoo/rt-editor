@@ -1,8 +1,7 @@
 import React, {useEffect} from "react";
 import { Controlled as CodeMirror } from "react-codemirror2";
-import "codemirror/lib/codemirror.css";
-import "codemirror/theme/monokai.css";
 import { connect } from "react-redux";
+import { Container } from "react-bootstrap";
 
 import {
   addSocket,
@@ -14,6 +13,13 @@ import { selectors } from "../../reducers";
 
 import { withRouter } from "react-router-dom";
 import { getDocumentTag } from '../../utils/locationhandler'
+
+const style = {
+  marginLeft: '10vw',
+  marginRight: '10vw',
+  marginTop: '10vh',
+  marginBottom: '10vh',
+}
 
 const Editor = withRouter(({
   value,
@@ -31,27 +37,33 @@ const Editor = withRouter(({
     addSocket(documentTag)
   }, [getCommands, addSocket, documentTag])
   return (
-    <CodeMirror
-      value={value}
-      options={{lineNumbers: true, options}}
-      onBeforeChange={(_editor, data, _value) => {
-        if (data.origin === "+input") {
-          const char = data.text.length === 2 ? "\n" : data.text[0];
-
-          const pos = data.from;
-
-          onInputInsertion(char, pos, documentTag);
-        } else if (data.origin === "+delete") {
-          const pos = data.to;
-
-          if (pos.line === 0 && pos.ch === 0) {
-            return false;
+    <Container style={style}>
+      <CodeMirror
+        value={value}
+        options={
+          {
+            options
           }
-
-          onInputDeletion(pos, documentTag);
         }
-      }}
-    />
+        onBeforeChange={(_editor, data, _value) => {
+          if (data.origin === "+input") {
+            const char = data.text.length === 2 ? "\n" : data.text[0];
+
+            const pos = data.from;
+
+            onInputInsertion(char, pos, documentTag);
+          } else if (data.origin === "+delete") {
+            const pos = data.to;
+
+            if (pos.line === 0 && pos.ch === 0) {
+              return false;
+            }
+
+            onInputDeletion(pos, documentTag);
+          }
+        }}
+      />
+    </Container>
   );
 });
 
