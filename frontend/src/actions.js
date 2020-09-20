@@ -5,22 +5,23 @@ export const ActionType = {
   InsertCommands: 'INSERT_COMMANDS',
   GetCommands: 'GET_COMMANDS',
   SetDocumentTag: 'SET_DOCUMENT_TAG',
+  AddSocket: 'ADD_SOCKET',
 };
 
-export const onInputInsertion = (char, pos) => ({
+export const onInputInsertion = (char, pos, documentTag) => ({
   type: ActionType.InputInsertion,
   char,
-  pos
+  pos,
+  documentTag,
 });
 
-export const onInputDeletion = pos => ({
+export const onInputDeletion = (pos, documentTag) => ({
   type: ActionType.InputDeletion,
-  pos
+  pos,
+  documentTag,
 });
 
 export const generateNewDoc = (history, newTab) => {
-  console.log('action newTab')
-  console.log(newTab)
   return {
     type: ActionType.GenerateNewDoc,
     history,
@@ -28,9 +29,17 @@ export const generateNewDoc = (history, newTab) => {
   };
 };
 
-export const getCommands = () => {
+export const getCommands = (documentTag) => {
   return {
     type: ActionType.GetCommands,
+    documentTag,
+  };
+}
+
+export const addSocket = (documentTag) => {
+  return {
+    type: ActionType.AddSocket,
+    documentTag,
   };
 }
 
@@ -56,9 +65,9 @@ export const localDeletion = (index) => {
   }
 }
 
-export const setDocumentTag = (documentTag) => {
-  return {
-    type: ActionType.SetDocumentTag,
-    documentTag
-  }
-}
+// export const setDocumentTag = (documentTag) => {
+//   return {
+//     type: ActionType.SetDocumentTag,
+//     documentTag
+//   }
+// }

@@ -7,6 +7,7 @@ import websockets
 import psycopg2
 import psycopg2.extras
 import toml
+from collections import defaultdict
 
 path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 config = toml.load(os.path.join(path, "config.toml"))
@@ -15,6 +16,8 @@ host = config['postgres_host']
 
 conn = psycopg2.connect(f"dbname=mydb user=john password=holax host={host}")
 cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+# unique column auto indexed
 cur.execute(
     "create table if not exists document"
     " (id serial primary key, document_tag varchar(200) unique)"
@@ -33,7 +36,26 @@ logging.basicConfig()
 
 STATE = {"value": 0}
 
-USERS = set()
+DOCUMENT_ID_TO_WEBSOCKETS = defaultdict(set)
+WEBSOCKET_TO_DOCUMENT_ID = {}
+
+def get_document_id(document_tag):
+    cur.execute(
+        'select id from document where document_tag = %s',
+        (document_tag, )
+    )
+    document_ids = cur.fetchall()
+    if len(document_ids) != 1:
+        raise f'duplicate documents with tag {document_tag}'
+    return document_ids[0]['id']
+
+
+def insert_delta(document_id, command):
+    cur.execute(
+        'insert into delta (document_id, command) values (%s, %s)',
+        (document_id, command)
+    )
+    conn.commit()
 
 def state_event():
     return json.dumps({"type": "state", **STATE})
@@ -41,54 +63,48 @@ def state_event():
 def users_event():
     return json.dumps({"type": "users", "count": len(USERS)})
 
-async def notify_state():
-    if USERS:  # asyncio.wait doesn't accept an empty list
-        message = state_event()
-        await asyncio.wait([user.send(message) for user in USERS])
+# async def notify_state():
+#     if USERS:  # asyncio.wait doesn't accept an empty list
+#         message = state_event()
+#         await asyncio.wait([user.send(message) for user in USERS])
 
-async def broadcast_message(user, message):
-    other_users = USERS - set([user])
-    if other_users:
-        await asyncio.wait([user.send(message) for user in other_users])
+async def broadcast_message(websocket, document_id, message):
+    other_websockets = DOCUMENT_ID_TO_WEBSOCKETS[document_id] - set([websocket])
+    if other_websockets:
+        await asyncio.wait(
+            [websocket.send(message) for websocket in other_websockets])
 
 async def notify_users():
     if USERS:  # asyncio.wait doesn't accept an empty list
         message = users_event()
         await asyncio.wait([user.send(message) for user in USERS])
 
-def get_all_commands():
-    cur.execute('select command from delta')
-    return [x['command'] for x in cur.fetchall()]
-
-
-async def sync_up(user):
-    commands = get_all_commands()
-    for command in commands:
-        asyncio.ensure_future(broadcast_message(user, command))
-
-async def register(websocket):
-    USERS.add(websocket)
-    # asyncio.ensure_future(sync_up(websocket))
-
-    # await notify_users()
+def add_socket(document_id, websocket):
+    DOCUMENT_ID_TO_WEBSOCKETS[document_id].add(websocket)
+    WEBSOCKET_TO_DOCUMENT_ID[websocket] = document_id
 
 async def unregister(websocket):
-    USERS.remove(websocket)
+    document_id = WEBSOCKET_TO_DOCUMENT_ID[websocket]
+    del WEBSOCKET_TO_DOCUMENT_ID[websocket]
+    DOCUMENT_ID_TO_WEBSOCKETS[document_id].remove(websocket)
+
     # await notify_users()
 
 async def counter(websocket, path):
-    # register(websocket) sends user_event() to websocket
-    await register(websocket)
+    # await register(websocket)
     try:
         async for message in websocket:
             data = json.loads(message)
+            print(data)
             t = data["type"]
             if t in ["BROADCAST_INSERT", "BROADCAST_DELETE"]:
-                cur.execute('insert into delta (command) values (%s)', (message,))
+                document_id = get_document_id(data['document_tag'])
+                insert_delta(document_id, message)
                 conn.commit()
-                await broadcast_message(websocket, message)
-            elif t in ['ADD_USER']:
-                continue
+                await broadcast_message(websocket, document_id, message)
+            elif t in ['ADD_SOCKET']:
+                document_id = get_document_id(data['document_tag'])
+                add_socket(document_id, websocket)
             else:
                 logging.error(f"unsupported event: {data}")
     finally:

@@ -38,9 +38,19 @@ def create_new_doc():
     conn.commit()
     return tag
 
-def get_all_commands():
-    cur.execute('select command from delta')
+def get_commands(document_id):
+    cur.execute('select command from delta where document_id = %s', (document_id,))
     return [x['command'] for x in cur.fetchall()]
+
+def get_document_id(document_tag):
+    cur.execute(
+        'select document.id from document where document_tag = %s',
+        (document_tag,)
+    )
+    document_ids = cur.fetchall()
+    if len(document_ids) != 1:
+        raise f'duplicate documents with tag {document_tag}'
+    return document_ids[0]['id']
 
 @app.route('/document', methods=['POST'])
 def document():
@@ -48,9 +58,10 @@ def document():
     return json.dumps({'document_tag': tag})
 
 
-@app.route('/commands', methods=['GET'])
-def generate_document():
-    commands = get_all_commands()
+@app.route('/commands/<document_tag>', methods=['GET'])
+def generate_document(document_tag):
+    document_id = get_document_id(document_tag)
+    commands = get_commands(document_id)
     return json.dumps({'commands': commands})
 
 import atexit

@@ -4,19 +4,32 @@ import "codemirror/lib/codemirror.css";
 import "codemirror/theme/monokai.css";
 import { connect } from "react-redux";
 
-import { onInputDeletion, onInputInsertion, getCommands } from "../../actions";
+import {
+  addSocket,
+  onInputDeletion,
+  onInputInsertion,
+  getCommands
+} from "../../actions";
 import { selectors } from "../../reducers";
 
-const Editor = ({
+import { withRouter } from "react-router-dom";
+import { getDocumentTag } from '../../utils/locationhandler'
+
+const Editor = withRouter(({
   value,
   options,
   onInputInsertion,
   onInputDeletion,
+  addSocket,
   getCommands,
+  location,
 }) => {
+  const pathname = location.pathname
+  const documentTag = getDocumentTag(pathname)
   useEffect(() => {
-    getCommands()
-  }, [getCommands])
+    getCommands(documentTag)
+    addSocket(documentTag)
+  }, [getCommands, addSocket, documentTag])
   return (
     <CodeMirror
       value={value}
@@ -27,7 +40,7 @@ const Editor = ({
 
           const pos = data.from;
 
-          onInputInsertion(char, pos);
+          onInputInsertion(char, pos, documentTag);
         } else if (data.origin === "+delete") {
           const pos = data.to;
 
@@ -35,18 +48,19 @@ const Editor = ({
             return false;
           }
 
-          onInputDeletion(pos);
+          onInputDeletion(pos, documentTag);
         }
       }}
     />
   );
-};
+});
 
 const mapStateToProps = state => {
   return { value: selectors.getText(state.editor) };
 };
 
 const mapDispatchToProps = {
+  addSocket,
   onInputInsertion,
   onInputDeletion,
   getCommands,

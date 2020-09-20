@@ -6,8 +6,8 @@ import { withRouter } from "react-router-dom";
 import { generateNewDoc } from "../../actions";
 
 const GenerateNewDoc = withRouter(({ generateNewDoc, history }) => {
-  const generateNewDocClosure = (env) => {
-    generateNewDoc(history, env.ctrlKey || env.metaKey)
+  const generateNewDocClosure = () => {
+    generateNewDoc(history)
   }
   return <Container
     className="text-center"

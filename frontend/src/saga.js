@@ -5,7 +5,6 @@ import { takeEvery, select, put, call } from "redux-saga/effects";
 import { createCRDTInsertion, createCRDTDeletion } from "./crdt";
 import {
   ActionType,
-  setDocumentTag,
   localInsertion,
   localDeletion,
 } from "./actions";
@@ -28,6 +27,7 @@ function* handleInsertion({ socket, username }, action) {
     JSON.stringify({
       type: "BROADCAST_INSERT",
       username,
+      document_tag: action.documentTag,
       char: insertion,
     })
   );
@@ -41,35 +41,38 @@ function* handleDeletion({ socket, username }, action) {
   const [posIndex, deletion] = createCRDTDeletion(action.pos, state.crdtText);
 
   socket.send(
-    JSON.stringify({ type: "BROADCAST_DELETE", username, char: deletion })
+    JSON.stringify({
+      type: "BROADCAST_DELETE",
+      username,
+      char: deletion,
+      document_tag: action.documentTag,
+    })
   );
 
   yield put(localDeletion(posIndex));
 }
 
-function* GenerateNewDoc(_, action) {
+function* GenerateNewDoc({socket}, action) {
   try {
     const result = yield call(
       () => superagent.post(`${HTTPS_BASE_URL}/document`)
     )
     const documentTag = JSON.parse(result.text).document_tag
+    // yield put(setDocumentTag(documentTag))
+
     const url = `/doc/${documentTag}`
-    console.log('newTab')
-    console.log(action.newTab)
-    if (action.newTab) {
-      window.open(url, '_blank');
-    }
     action.history.push(url)
-    yield put(setDocumentTag(documentTag))
   } catch (err) {
     console.log(err)
   }
 }
 
-function* getCommands(action) {
+function* getCommands(_, action) {
+  console.log('action')
+  console.log(action)
   try {
     const result = yield call(
-      () => superagent.get(`${HTTPS_BASE_URL}/commands`))
+      () => superagent.get(`${HTTPS_BASE_URL}/commands/${action.documentTag}`))
     const commands = JSON.parse(result.text).commands
     yield put({type: ActionType.InsertCommands, commands})
   }
@@ -78,11 +81,21 @@ function* getCommands(action) {
   }
 }
 
+function* addSocket({socket}, action) {
+    yield socket.send(
+      JSON.stringify({
+        type: "ADD_SOCKET",
+        document_tag: action.documentTag,
+      })
+    )
+}
+
 function* handleInput(params) {
   yield takeEvery(ActionType.InputDeletion, handleDeletion, params);
   yield takeEvery(ActionType.InputInsertion, handleInsertion, params);
   yield takeEvery(ActionType.GenerateNewDoc, GenerateNewDoc, params);
   yield takeEvery(ActionType.GetCommands, getCommands, params);
+  yield takeEvery(ActionType.AddSocket, addSocket, params);
 }
 
 export default handleInput;
