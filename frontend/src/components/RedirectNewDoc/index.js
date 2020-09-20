@@ -1,37 +1,30 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import {
-  generateNewDoc
-} from "../../actions";
+import { generateNewDoc } from "../../actions";
 import { Redirect } from "react-router-dom";
-import { getDocumentUrl } from '../../utils/locationhandler'
-import { wrapper } from '../NewDocWrapper'
+import { getDocumentUrl } from "../../utils/locationhandler";
+import { wrapper } from "../NewDocWrapper";
 
-const redirectNewDoc = ({documentTag}) => {
+const redirectNewDoc = ({ documentTag }) => {
   return (
     <div>
-        {
-          documentTag?
-          <Redirect to={getDocumentUrl(documentTag)}/>:
-          <div>
-            Generating document ...
-          </div>
-        }
+      {documentTag ? (
+        <Redirect to={getDocumentUrl(documentTag)} />
+      ) : (
+        <div>Generating document ...</div>
+      )}
     </div>
-  )
+  );
 };
 
+const WrappedComponent = wrapper(redirectNewDoc);
 
-const WrappedComponent = wrapper(
-  redirectNewDoc
-)
-
-const RedirectNewDoc = ({generateNewDoc, documentTag}) => {
+const RedirectNewDoc = ({ generateNewDoc, documentTag }) => {
   useEffect(() => {
-    generateNewDoc()
-  }, [generateNewDoc])
+    generateNewDoc();
+  }, [generateNewDoc]);
 
-  return <WrappedComponent documentTag={documentTag}/>
+  return <WrappedComponent documentTag={documentTag} />;
 };
 
 const mapDispatchToProps = {
@@ -39,12 +32,12 @@ const mapDispatchToProps = {
 };
 
 const mapStateToProps = ({
-  editor: {documentTag, ...editorState},
+  editor: { documentTag, ...editorState },
   ...state
 }) => {
-  console.log('mapStateToProps')
-  console.log(state)
-  console.log(documentTag)
+  console.log("mapStateToProps");
+  console.log(state);
+  console.log(documentTag);
   return { documentTag };
 };
 

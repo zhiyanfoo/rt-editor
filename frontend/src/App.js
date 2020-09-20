@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import { GenerateNewDoc } from "./components/GenerateNewDoc";
 import { RedirectNewDoc } from "./components/RedirectNewDoc";

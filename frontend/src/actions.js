@@ -2,70 +2,70 @@ export const ActionType = {
   InputInsertion: "INPUT_INSERTION",
   InputDeletion: "INPUT_DELETION",
   GenerateNewDoc: "GENERATE_NEW_DOC",
-  InsertCommands: 'INSERT_COMMANDS',
-  GetCommands: 'GET_COMMANDS',
-  SetDocumentTag: 'SET_DOCUMENT_TAG',
-  AddSocket: 'ADD_SOCKET',
+  InsertCommands: "INSERT_COMMANDS",
+  GetCommands: "GET_COMMANDS",
+  SetDocumentTag: "SET_DOCUMENT_TAG",
+  AddSocket: "ADD_SOCKET"
 };
 
 export const onInputInsertion = (char, pos, documentTag) => ({
   type: ActionType.InputInsertion,
   char,
   pos,
-  documentTag,
+  documentTag
 });
 
 export const onInputDeletion = (pos, documentTag) => ({
   type: ActionType.InputDeletion,
   pos,
-  documentTag,
+  documentTag
 });
 
 export const generateNewDoc = () => {
   return {
-    type: ActionType.GenerateNewDoc,
+    type: ActionType.GenerateNewDoc
   };
 };
 
-export const getCommands = (documentTag) => {
+export const getCommands = documentTag => {
   return {
     type: ActionType.GetCommands,
-    documentTag,
+    documentTag
   };
-}
+};
 
-export const addSocket = (documentTag) => {
+export const addSocket = documentTag => {
   return {
     type: ActionType.AddSocket,
-    documentTag,
+    documentTag
   };
-}
+};
 
-export const insertCommands = (commands) => {
+export const insertCommands = commands => {
   return {
     type: ActionType.InsertCommands,
-    commands,
+    commands
   };
-}
+};
 
 export const localInsertion = (index, char) => {
   return {
     type: "LOCAL_INSERTION",
     index,
-    char,
-  }
-}
+    char
+  };
+};
 
-export const localDeletion = (index) => {
+export const localDeletion = index => {
   return {
     type: "LOCAL_DELETION",
-    index: index,
-  }
-}
+    index: index
+  };
+};
 
-export const setDocumentTag = (documentTag) => {
+export const setDocumentTag = documentTag => {
   return {
     type: ActionType.SetDocumentTag,
     documentTag
-  }
-}
+  };
+};

@@ -1,12 +1,10 @@
 import username from "./username";
 const BASE = 5;
 
-export const crdtTextToString = (crdtText) => {
-  if (crdtText === undefined)
-    return ""
+export const crdtTextToString = crdtText => {
+  if (crdtText === undefined) return "";
   return crdtText.map(x => x.value).join("");
-}
-
+};
 
 // type crtdText = Array<CRDTChar>
 // type CRDTPosition = Array<number>

@@ -1,10 +1,10 @@
 import { crdtTextToString } from "./crdt";
 
-export const initialState = { crdtText: [] }
+export const initialState = { crdtText: [] };
 
 export const selectors = {
   getText: state => crdtTextToString(state.crdtText)
-}
+};
 
 const createReducer = (initialState, handlers) => (
   state = initialState,
@@ -14,62 +14,71 @@ const createReducer = (initialState, handlers) => (
     ? handlers[action.type](state, action)
     : state;
 
-
 export const insertCommandsReducer = (state = {}, action) => {
-  const commands = action.commands
-  const parsedCommands = commands.map(JSON.parse)
-  return parsedCommands.reduce(editor, state)
-}
+  const commands = action.commands;
+  const parsedCommands = commands.map(JSON.parse);
+  return parsedCommands.reduce(editor, state);
+};
 
 export const localInsertionReducer = (state = {}, action) => {
   const crdtText = state.crdtText;
-  if (crdtText === undefined)
-    return initialState
+  if (crdtText === undefined) return initialState;
   const index = action.index;
   const char = action.char;
-  const newStruct = [...crdtText.slice(0, index), char, ...crdtText.slice(index)];
+  const newStruct = [
+    ...crdtText.slice(0, index),
+    char,
+    ...crdtText.slice(index)
+  ];
   return { crdtText: newStruct };
 };
 
 export const localDeletionReducer = (state = {}, action) => {
   const crdtText = state.crdtText;
-  if (crdtText === undefined)
-    return initialState
+  if (crdtText === undefined) return initialState;
   const index = action.index;
-  const newCrdtText = [...crdtText.slice(0, index), ...crdtText.slice(index + 1)];
+  const newCrdtText = [
+    ...crdtText.slice(0, index),
+    ...crdtText.slice(index + 1)
+  ];
   return { crdtText: newCrdtText };
 };
 
 export const remoteInsertionReducer = (state = {}, action) => {
   const char = action.char;
   const crdtText = state.crdtText;
-  if (crdtText === undefined)
-    return initialState
+  if (crdtText === undefined) return initialState;
   const [, index] = binarySearch(crdtText, compare, char);
-  const newCrdtText = [...crdtText.slice(0, index), char, ...crdtText.slice(index)];
+  const newCrdtText = [
+    ...crdtText.slice(0, index),
+    char,
+    ...crdtText.slice(index)
+  ];
   return { crdtText: newCrdtText };
 };
 
 export const remoteDeletionReducer = (state = {}, action) => {
   const char = action.char;
   const crdtText = state.crdtText;
-  if (crdtText === undefined)
-    return initialState
+  if (crdtText === undefined) return initialState;
   const [found, index] = binarySearch(crdtText, compare, char);
   if (!found) {
     console.warn("Not found");
     return { crdtText };
   }
 
-  const newCrdtText = [...crdtText.slice(0, index), ...crdtText.slice(index + 1)];
+  const newCrdtText = [
+    ...crdtText.slice(0, index),
+    ...crdtText.slice(index + 1)
+  ];
   return { crdtText: newCrdtText };
 };
 
 const setDocumentTagReducer = (state = {}, action) => {
-  console.log('setDocumentTagReducer ')
-  console.log(action)
-  return {...state, documentTag: action.documentTag}
-}
+  console.log("setDocumentTagReducer ");
+  console.log(action);
+  return { ...state, documentTag: action.documentTag };
+};
 
 export const compare = (c1, c2) => {
   const pos1 = c1.position;
@@ -131,14 +140,11 @@ export const binarySearchHelper = (list, compare, target, min, max) => {
   return [true, half];
 };
 
-export const editor = createReducer(
-  initialState,
-  {
-    LOCAL_INSERTION: localInsertionReducer,
-    LOCAL_DELETION: localDeletionReducer,
-    BROADCAST_INSERT: remoteInsertionReducer,
-    BROADCAST_DELETE: remoteDeletionReducer,
-    INSERT_COMMANDS: insertCommandsReducer,
-    SET_DOCUMENT_TAG: setDocumentTagReducer
-  }
-);
+export const editor = createReducer(initialState, {
+  LOCAL_INSERTION: localInsertionReducer,
+  LOCAL_DELETION: localDeletionReducer,
+  BROADCAST_INSERT: remoteInsertionReducer,
+  BROADCAST_DELETE: remoteDeletionReducer,
+  INSERT_COMMANDS: insertCommandsReducer,
+  SET_DOCUMENT_TAG: setDocumentTagReducer
+});

@@ -1,5 +1,5 @@
-import { WEBSOCKET_BASE_URL } from './config'
-import ReconnectingWebSocket from 'reconnecting-websocket'
+import { WEBSOCKET_BASE_URL } from "./config";
+import ReconnectingWebSocket from "reconnecting-websocket";
 
 const setupSocket = (dispatch, username) => {
   const socket = new ReconnectingWebSocket(`${WEBSOCKET_BASE_URL}`);

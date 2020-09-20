@@ -1,5 +1,5 @@
 import seedrandom from "seedrandom";
-import superagent from 'superagent';
+import superagent from "superagent";
 
 import { takeEvery, select, put, call } from "redux-saga/effects";
 import { createCRDTInsertion, createCRDTDeletion } from "./crdt";
@@ -9,7 +9,7 @@ import {
   localDeletion,
   setDocumentTag
 } from "./actions";
-import { HTTPS_BASE_URL } from './config'
+import { HTTPS_BASE_URL } from "./config";
 
 function* handleInsertion({ socket, username }, action) {
   const state = yield select(state => state.editor);
@@ -29,7 +29,7 @@ function* handleInsertion({ socket, username }, action) {
       type: "BROADCAST_INSERT",
       username,
       document_tag: action.documentTag,
-      char: insertion,
+      char: insertion
     })
   );
 
@@ -46,48 +46,48 @@ function* handleDeletion({ socket, username }, action) {
       type: "BROADCAST_DELETE",
       username,
       char: deletion,
-      document_tag: action.documentTag,
+      document_tag: action.documentTag
     })
   );
 
   yield put(localDeletion(posIndex));
 }
 
-function* GenerateNewDoc({socket}) {
+function* GenerateNewDoc({ socket }) {
   try {
-    const result = yield call(
-      () => superagent.post(`${HTTPS_BASE_URL}/document`)
-    )
-    const documentTag = JSON.parse(result.text).document_tag
-    console.log('documentTag saga')
-    console.log(documentTag)
-    yield put(setDocumentTag(documentTag))
+    const result = yield call(() =>
+      superagent.post(`${HTTPS_BASE_URL}/document`)
+    );
+    const documentTag = JSON.parse(result.text).document_tag;
+    console.log("documentTag saga");
+    console.log(documentTag);
+    yield put(setDocumentTag(documentTag));
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
 }
 
 function* getCommands(_, action) {
-  console.log('action')
-  console.log(action)
+  console.log("action");
+  console.log(action);
   try {
-    const result = yield call(
-      () => superagent.get(`${HTTPS_BASE_URL}/commands/${action.documentTag}`))
-    const commands = JSON.parse(result.text).commands
-    yield put({type: ActionType.InsertCommands, commands})
-  }
-  catch (err) {
-    console.log(err)
+    const result = yield call(() =>
+      superagent.get(`${HTTPS_BASE_URL}/commands/${action.documentTag}`)
+    );
+    const commands = JSON.parse(result.text).commands;
+    yield put({ type: ActionType.InsertCommands, commands });
+  } catch (err) {
+    console.log(err);
   }
 }
 
-function* addSocket({socket}, action) {
-    yield socket.send(
-      JSON.stringify({
-        type: "ADD_SOCKET",
-        document_tag: action.documentTag,
-      })
-    )
+function* addSocket({ socket }, action) {
+  yield socket.send(
+    JSON.stringify({
+      type: "ADD_SOCKET",
+      document_tag: action.documentTag
+    })
+  );
 }
 
 function* handleInput(params) {

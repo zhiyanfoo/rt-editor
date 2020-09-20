@@ -1,14 +1,14 @@
-const documentTagRegex = /\/doc\/([A-Za-z-]+)/g
+const documentTagRegex = /\/doc\/([A-Za-z-]+)/g;
 
-export const getDocumentTag = (pathname) => {
+export const getDocumentTag = pathname => {
   // https://stackoverflow.com/questions/4724701/regexp-exec-returns-null-sporadically
-  documentTagRegex.lastIndex = 0
-  const arr = documentTagRegex.exec(pathname)
-  const result = arr === null
+  documentTagRegex.lastIndex = 0;
+  const arr = documentTagRegex.exec(pathname);
+  const result = arr === null;
   if (result) {
-    throw new Error(`could not find a match for string '${pathname}'`)
+    throw new Error(`could not find a match for string '${pathname}'`);
   }
-  return arr[1]
-}
+  return arr[1];
+};
 
-export const getDocumentUrl = (documentTag) => `/doc/${documentTag}`;
+export const getDocumentUrl = documentTag => `/doc/${documentTag}`;
