@@ -1,3 +1,4 @@
+import atexit
 import os
 import json
 import uuid
@@ -22,7 +23,6 @@ CORS(app, origin=origin)
 
 connection_arg = f"dbname={dbname} user={user} password={password} host={host}"
 connection_pool = psycopg2.pool.ThreadedConnectionPool(4,4, connection_arg)
-import atexit
 def cleanup():
     WORDS_FILE.close()
     connection_pool.closeall()
