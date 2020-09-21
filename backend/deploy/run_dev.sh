@@ -7,4 +7,4 @@ cat docker-compose.tpl.yml \
   'app_origin=localhost:3000' \
   > docker-compose.yml
 cat docker-compose.yml
-docker-compose -f docker-compose.yml up
+docker stack deploy demo --compose-file docker-compose.yml
