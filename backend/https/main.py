@@ -91,4 +91,3 @@ def generate_document(document_tag):
     document_id = get_document_id(document_tag)
     commands = get_commands(document_id)
     return json.dumps({'commands': commands})
-
