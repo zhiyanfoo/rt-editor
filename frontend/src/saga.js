@@ -59,8 +59,6 @@ function* GenerateNewDoc({ socket }) {
       superagent.post(`${HTTPS_BASE_URL}/document`)
     );
     const documentTag = JSON.parse(result.text).document_tag;
-    console.log("documentTag saga");
-    console.log(documentTag);
     yield put(setDocumentTag(documentTag));
   } catch (err) {
     console.log(err);
@@ -68,8 +66,6 @@ function* GenerateNewDoc({ socket }) {
 }
 
 function* getCommands(_, action) {
-  console.log("action");
-  console.log(action);
   try {
     const result = yield call(() =>
       superagent.get(`${HTTPS_BASE_URL}/commands/${action.documentTag}`)

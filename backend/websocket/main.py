@@ -4,6 +4,9 @@ import asyncio
 import json
 import logging
 
+from threading import Thread
+import time
+
 import websockets
 import psycopg2
 import psycopg2.extras
@@ -46,6 +49,26 @@ finally:
     connection_pool.putconn(migration_conn)
 
 logging.basicConfig()
+
+def background_task():
+    while True:
+        print('health check')
+        conn = connection_pool.getconn()
+        try:
+            cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+            cur.execute('select 1;')
+            document_ids = cur.fetchall()
+            cur.close()
+        except Exception as e:
+            print('Unable to connect to pg, exiting app')
+            cleanup()
+            os._exit(1)
+        finally:
+            connection_pool.putconn(conn)
+        time.sleep(5)
+
+t = Thread(target=background_task)
+t.start()
 
 STATE = {"value": 0}
 

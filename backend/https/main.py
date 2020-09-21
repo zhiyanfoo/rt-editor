@@ -4,6 +4,10 @@ import json
 import uuid
 import random
 
+from threading import Thread
+import time
+
+
 from flask import Flask
 import psycopg2
 import psycopg2.extras
@@ -32,6 +36,26 @@ atexit.register(cleanup)
 WORDS_FILE = open('../words/words', 'r')
 WORDS = WORDS_FILE.readlines()
 WORDS_LEN = len(WORDS)
+
+def background_task():
+    while True:
+        print('health check')
+        conn = connection_pool.getconn()
+        try:
+            cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+            cur.execute('select 1;')
+            document_ids = cur.fetchall()
+            cur.close()
+        except Exception as e:
+            print('Unable to connect to pg, exiting app')
+            cleanup()
+            os._exit(1)
+        finally:
+            connection_pool.putconn(conn)
+        time.sleep(5)
+
+t = Thread(target=background_task)
+t.start()
 
 def generate_document_id_():
     return "-".join(WORDS[rd.randint(0, WORDS_LEN - 1)].lower().strip() for _ in range(4))
