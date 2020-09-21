@@ -3,15 +3,6 @@ import ReconnectingWebSocket from "reconnecting-websocket";
 
 const setupSocket = (dispatch, username) => {
   const socket = new ReconnectingWebSocket(`${WEBSOCKET_BASE_URL}`);
-
-  // socket.onopen = () => {
-  //   socket.send(
-  //     JSON.stringify({
-  //       type: "ADD_USER",
-  //       name: username
-  //     })
-  //   );
-  // };
   socket.onmessage = event => {
     const data = JSON.parse(event.data);
 
