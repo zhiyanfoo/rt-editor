@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  app:
+    image: zhiyanfoo/rt-editor-app
+    ports:
+      - "3000:80"
+  http:
+    image: zhiyanfoo/rt-editor-http
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_USER: backend
+      POSTGRES_DB: rtdoc
+      POSTGRES_PASSWORD: {{ $postgress_password }}
+    ports:
+      - "5001:5001"
+  websocket:
+    image: zhiyanfoo/rt-editor-websocket
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_USER: backend
+      POSTGRES_DB: rtdoc
+      POSTGRES_PASSWORD: {{ $postgress_password }}
+    ports:
+      - "5000:5000"
+  # Ideally shouldn't run db in container.
+  db:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_USER: backend
+      POSTGRES_DB: rtdoc
+      POSTGRES_PASSWORD: {{ $postgress_password }}
+    ports:
+      - "5432:5432"

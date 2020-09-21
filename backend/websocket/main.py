@@ -1,3 +1,4 @@
+import atexit
 import os
 import asyncio
 import json
@@ -6,31 +7,43 @@ import logging
 import websockets
 import psycopg2
 import psycopg2.extras
-import toml
+import psycopg2.pool
 from collections import defaultdict
 
-path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-config = toml.load(os.path.join(path, "config.toml"))
+host = os.environ['POSTGRES_HOST']
+dbname = os.environ['POSTGRES_DB']
+user = os.environ['POSTGRES_USER']
+password = os.environ['POSTGRES_PASSWORD']
+port = os.environ['PORT']
 
-host = config['postgres_host']
+connection_arg = f"dbname={dbname} user={user} password={password} host={host}"
+connection_pool = psycopg2.pool.ThreadedConnectionPool(4,4, connection_arg)
+def cleanup():
+    connection_pool.closeall()
 
-conn = psycopg2.connect(f"dbname=mydb user=john password=holax host={host}")
-cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+atexit.register(cleanup)
 
-# unique column auto indexed
-cur.execute(
-    "create table if not exists document"
-    " (id serial primary key, document_tag varchar(200) unique)"
-)
+migration_conn = connection_pool.getconn()
+try:
+    migration_cur = migration_conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
 
-cur.execute(
-    "create table if not exists delta "
-    "(id serial primary key, document_id integer references document (id)"
-    " , command text, created_at timestamp default current_timestamp)"
-)
+    # unique column auto indexed
+    migration_cur.execute(
+        "create table if not exists document"
+        " (id serial primary key, document_tag varchar(200) unique)"
+    )
 
-cur.execute('create index if not exists document_id_idx on delta (document_id)')
-conn.commit()
+    migration_cur.execute(
+        "create table if not exists delta "
+        "(id serial primary key, document_id integer references document (id)"
+        " , command text, created_at timestamp default current_timestamp)"
+    )
+
+    migration_cur.execute('create index if not exists document_id_idx on delta (document_id)')
+    migration_conn.commit()
+    migration_cur.close()
+finally:
+    connection_pool.putconn(migration_conn)
 
 logging.basicConfig()
 
@@ -40,22 +53,35 @@ DOCUMENT_ID_TO_WEBSOCKETS = defaultdict(set)
 WEBSOCKET_TO_DOCUMENT_ID = {}
 
 def get_document_id(document_tag):
-    cur.execute(
-        'select id from document where document_tag = %s',
-        (document_tag, )
-    )
-    document_ids = cur.fetchall()
-    if len(document_ids) != 1:
-        raise f'duplicate documents with tag {document_tag}'
+    conn = connection_pool.getconn()
+    try:
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        cur.execute(
+            'select document.id from document where document_tag = %s',
+            (document_tag,)
+        )
+        document_ids = cur.fetchall()
+        cur.close()
+    finally:
+        connection_pool.putconn(conn)
+    if len(document_ids) == 0:
+        raise ValueError(f"missing document tag '{document_tag}'")
+    elif len(document_ids) > 1:
+        raise ValueError(f"duplicate documents with tag '{document_tag}'")
     return document_ids[0]['id']
 
-
 def insert_delta(document_id, command):
-    cur.execute(
-        'insert into delta (document_id, command) values (%s, %s)',
-        (document_id, command)
-    )
-    conn.commit()
+    conn = connection_pool.getconn()
+    try:
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+        cur.execute(
+            'insert into delta (document_id, command) values (%s, %s)',
+            (document_id, command)
+        )
+        conn.commit()
+        cur.close()
+    finally:
+        connection_pool.putconn(conn)
 
 def state_event():
     return json.dumps({"type": "state", **STATE})
@@ -100,7 +126,6 @@ async def counter(websocket, path):
             if t in ["BROADCAST_INSERT", "BROADCAST_DELETE"]:
                 document_id = get_document_id(data['document_tag'])
                 insert_delta(document_id, message)
-                conn.commit()
                 await broadcast_message(websocket, document_id, message)
             elif t in ['ADD_SOCKET']:
                 document_id = get_document_id(data['document_tag'])
@@ -110,7 +135,7 @@ async def counter(websocket, path):
     finally:
         await unregister(websocket)
 
-start_server = websockets.serve(counter, "localhost", 5000)
+start_server = websockets.serve(counter, "0.0.0.0", port)
 
 print("Starting")
 asyncio.get_event_loop().run_until_complete(start_server)
@@ -118,9 +143,3 @@ asyncio.get_event_loop().run_forever()
 
 socketio.run(app)
 
-import atexit
-def cleanup():
-    cur.close()
-    conn.close()
-
-atexit.register(cleanup)

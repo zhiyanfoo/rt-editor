@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  websocket:
+    image: zhiyanfoo/rt-editor-websocket
+    environment:
+      POSTGRES_HOST: docker.for.mac.host.internal
+      POSTGRES_USER: dev_user
+      POSTGRES_DB: dev_db
+      POSTGRES_PASSWORD: dev_password
+      PORT: 5000
+    ports:
+      - "5000:5000"

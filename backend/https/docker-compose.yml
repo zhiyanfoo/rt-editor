@@ -1,0 +1,13 @@
+version: "3"
+
+services:
+  http:
+    image: zhiyanfoo/rt-editor-http
+    environment:
+      POSTGRES_HOST: docker.for.mac.host.internal
+      POSTGRES_USER: dev_user
+      POSTGRES_DB: dev_db
+      POSTGRES_PASSWORD: dev_password
+      APP_ORIGIN: 'localhost:3000'
+    ports:
+      - "5001:5001"
