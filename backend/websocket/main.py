@@ -52,7 +52,6 @@ logging.basicConfig()
 
 def background_task():
     while True:
-        print('health check')
         conn = connection_pool.getconn()
         try:
             cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
@@ -65,7 +64,7 @@ def background_task():
             os._exit(1)
         finally:
             connection_pool.putconn(conn)
-        time.sleep(5)
+        time.sleep(10)
 
 t = Thread(target=background_task)
 t.start()
