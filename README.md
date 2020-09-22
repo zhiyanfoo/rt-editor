@@ -3,13 +3,14 @@
 Embeddable real-time text editor.
 
 To do
-* Expose editor as a library.
+* Don't jump cursor when someone else edits
+(requires fixing CodeMirror controlled component bug or move to different editor)
 * Allow cut/copy and paste
-* Allow multiple cursors at the same time (CodeMirror specific configuration)
 * Capture logs using Elasticsearch and alert based on logs
 * Enable prometheus monitoring, add metrics to services
 * Display metrics on Grafana
 * Automate deployment of services on AWS using Terraform.
+* Expose editor as a library.
 * ~~Implement CRDT data-structure for real-time editing~~
 * ~~Integerate with CodeMirror~~
 * ~~Seperate CRDT and react-specific methods~~
