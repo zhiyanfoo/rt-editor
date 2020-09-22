@@ -18,9 +18,9 @@ code {
   font-size: 18px;
 }
 
-.CodeMirror:not(.CodeMirror-focused) .CodeMirror-cursors {
-  visibility: visible !important;
-}
-.CodeMirror:not(.CodeMirror-focused) .CodeMirror-cursor {
-  /* Styles for cursor when editor is out of focus */
-}
+/* .CodeMirror:not(.CodeMirror-focused) .CodeMirror-cursors { */
+/*   visibility: visible !important; */
+/* } */
+/* .CodeMirror:not(.CodeMirror-focused) .CodeMirror-cursor { */
+/*   /1* Styles for cursor when editor is out of focus *1/ */
+/* } */
