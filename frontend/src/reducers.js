@@ -25,12 +25,12 @@ export const localInsertionReducer = (state = {}, action) => {
   if (crdtText === undefined) return initialState;
   const index = action.index;
   const char = action.char;
-  const newStruct = [
+  const newCrdtText = [
     ...crdtText.slice(0, index),
     char,
     ...crdtText.slice(index)
   ];
-  return { crdtText: newStruct };
+  return { ...state, crdtText: newCrdtText };
 };
 
 export const localDeletionReducer = (state = {}, action) => {
@@ -41,7 +41,7 @@ export const localDeletionReducer = (state = {}, action) => {
     ...crdtText.slice(0, index),
     ...crdtText.slice(index + 1)
   ];
-  return { crdtText: newCrdtText };
+  return { ...state, crdtText: newCrdtText };
 };
 
 export const remoteInsertionReducer = (state = {}, action) => {
@@ -54,7 +54,7 @@ export const remoteInsertionReducer = (state = {}, action) => {
     char,
     ...crdtText.slice(index)
   ];
-  return { crdtText: newCrdtText };
+  return { ...state, crdtText: newCrdtText };
 };
 
 export const remoteDeletionReducer = (state = {}, action) => {
@@ -64,14 +64,14 @@ export const remoteDeletionReducer = (state = {}, action) => {
   const [found, index] = binarySearch(crdtText, compare, char);
   if (!found) {
     console.warn("Not found");
-    return { crdtText };
+    return { ...state, crdtText };
   }
 
   const newCrdtText = [
     ...crdtText.slice(0, index),
     ...crdtText.slice(index + 1)
   ];
-  return { crdtText: newCrdtText };
+  return { ...state, crdtText: newCrdtText };
 };
 
 const setDocumentTagReducer = (state = {}, action) => {
