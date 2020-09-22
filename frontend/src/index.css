@@ -17,3 +17,10 @@ code {
   font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
   font-size: 18px;
 }
+
+.CodeMirror:not(.CodeMirror-focused) .CodeMirror-cursors {
+  visibility: visible !important;
+}
+.CodeMirror:not(.CodeMirror-focused) .CodeMirror-cursor {
+  /* Styles for cursor when editor is out of focus */
+}
