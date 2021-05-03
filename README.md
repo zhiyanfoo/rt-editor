@@ -4,8 +4,6 @@ Embeddable js collaborative plain text editor. Uses
 [CRDT](https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type) to ensure parallel
 updates work.
 
-Demo: [editor.haskelluw.com](http://editor.haskelluw.com)
-
 To do
 * Don't jump cursor when someone else edits
 (requires fixing CodeMirror controlled component bug or move to different editor)
